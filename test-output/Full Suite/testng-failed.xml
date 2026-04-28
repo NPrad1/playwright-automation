@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="3" parallel="tests" name="Failed suite [Full Suite]">
+  <test thread-count="3" parallel="tests" name="WebKit(failed)">
+    <parameter name="browser" value="webkit"/>
+    <classes>
+      <class name="com.playwright.qa.test.NewUserSignUpTest">
+        <methods>
+          <include name="verifyNewUserSignUpEmailAlreadyRegistered"/>
+          <include name="EndToEndNewUserdRegisterAndLoginSuccessfullyTest"/>
+          <include name="passwordMimimumLengthTest"/>
+          <include name="verifyNewUserSignUpPage"/>
+          <include name="tearDown"/>
+          <include name="setUpnewUserSignUpPage"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- com.playwright.qa.test.NewUserSignUpTest -->
+    </classes>
+  </test> <!-- WebKit(failed) -->
+  <test thread-count="3" parallel="tests" name="Firefox(failed)">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.playwright.qa.test.NewUserSignUpTest">
+        <methods>
+          <include name="verifyNewUserSignUpEmailAlreadyRegistered"/>
+          <include name="verifyNewUserSignUpPage"/>
+          <include name="EndToEndNewUserdRegisterAndLoginSuccessfullyTest"/>
+          <include name="passwordMimimumLengthTest"/>
+          <include name="tearDown"/>
+          <include name="setUpnewUserSignUpPage"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- com.playwright.qa.test.NewUserSignUpTest -->
+    </classes>
+  </test> <!-- Firefox(failed) -->
+</suite> <!-- Failed suite [Full Suite] -->

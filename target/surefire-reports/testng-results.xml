@@ -1,0 +1,1041 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="27" passed="27" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-04-27T20:14:23 IST" name="Suite Smoke" finished-at="2026-04-27T20:22:04 IST" duration-ms="461256">
+    <groups>
+      <group name="regression">
+        <method signature="CartPageTest.UpdateAndRemoveCartTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" name="UpdateAndRemoveCartTest" class="com.playwright.qa.test.CartPageTest"/>
+        <method signature="CartPageTest.enrollNowCourseTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" name="enrollNowCourseTest" class="com.playwright.qa.test.CartPageTest"/>
+        <method signature="CartPageTest.verifyCartEndToEndFlowTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" name="verifyCartEndToEndFlowTest" class="com.playwright.qa.test.CartPageTest"/>
+        <method signature="DashboardPageTest.CourseNameAndPriceTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" name="CourseNameAndPriceTest" class="com.playwright.qa.test.DashboardPageTest"/>
+        <method signature="DashboardPageTest.CourseTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" name="CourseTest" class="com.playwright.qa.test.DashboardPageTest"/>
+        <method signature="DashboardPageTest.verifyAddSpecificCourseToCart(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" name="verifyAddSpecificCourseToCart" class="com.playwright.qa.test.DashboardPageTest"/>
+        <method signature="DashboardPageTest.verifyCourseNameAndPriceFromTestDataTest(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" name="verifyCourseNameAndPriceFromTestDataTest" class="com.playwright.qa.test.DashboardPageTest"/>
+        <method signature="LandingPageTest.LandingPageSocialMediaIconsTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" name="LandingPageSocialMediaIconsTest" class="com.playwright.qa.test.LandingPageTest"/>
+        <method signature="LoginTest.verifyLoginLogOut()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="verifyLoginLogOut" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="ManageCoursesTest.searchCourseNameTest(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" name="searchCourseNameTest" class="com.playwright.qa.test.ManageCoursesTest"/>
+        <method signature="ManageCoursesTest.verifyManageCourseNavigation()[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" name="verifyManageCourseNavigation" class="com.playwright.qa.test.ManageCoursesTest"/>
+        <method signature="NewUserSignUpTest.EndToEndNewUserdRegisterAndLoginSuccessfullyTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" name="EndToEndNewUserdRegisterAndLoginSuccessfullyTest" class="com.playwright.qa.test.NewUserSignUpTest"/>
+        <method signature="NewUserSignUpTest.passwordMimimumLengthTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" name="passwordMimimumLengthTest" class="com.playwright.qa.test.NewUserSignUpTest"/>
+        <method signature="NewUserSignUpTest.verifyNewUserSignUpEmailAlreadyRegistered(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" name="verifyNewUserSignUpEmailAlreadyRegistered" class="com.playwright.qa.test.NewUserSignUpTest"/>
+        <method signature="LoginTest.verifyLoginPageURLTest()[pri:1, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="verifyLoginPageURLTest" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="LoginTest.loginPageNewUserSignUpButtonTest()[pri:2, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="loginPageNewUserSignUpButtonTest" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="LoginTest.loginPageSocialMediaButtonTest()[pri:3, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="loginPageSocialMediaButtonTest" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="LoginTest.loginWithOutEmailPasswordTest()[pri:4, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="loginWithOutEmailPasswordTest" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="LoginTest.unregisteredEmailUserTest()[pri:5, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="unregisteredEmailUserTest" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="LoginTest.loginWithEmailAndEmptyPasswordTest()[pri:6, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="loginWithEmailAndEmptyPasswordTest" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="LoginTest.loginWithPasswordAndEmptyEmailTest()[pri:7, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="loginWithPasswordAndEmptyEmailTest" class="com.playwright.qa.test.LoginTest"/>
+      </group> <!-- regression -->
+      <group name="smoke">
+        <method signature="CartPageTest.enrollNowCourseTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" name="enrollNowCourseTest" class="com.playwright.qa.test.CartPageTest"/>
+        <method signature="CartPageTest.verifyCartEndToEndFlowTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" name="verifyCartEndToEndFlowTest" class="com.playwright.qa.test.CartPageTest"/>
+        <method signature="DashboardPageTest.CourseNameAndPriceTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" name="CourseNameAndPriceTest" class="com.playwright.qa.test.DashboardPageTest"/>
+        <method signature="DashboardPageTest.CourseTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" name="CourseTest" class="com.playwright.qa.test.DashboardPageTest"/>
+        <method signature="LandingPageTest.LandingPageCoursesTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" name="LandingPageCoursesTest" class="com.playwright.qa.test.LandingPageTest"/>
+        <method signature="LandingPageTest.LandingPageTitleTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" name="LandingPageTitleTest" class="com.playwright.qa.test.LandingPageTest"/>
+        <method signature="LoginTest.verifyLoginLogOut()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="verifyLoginLogOut" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="ManageCoursesTest.verifyManageCourseNavigation()[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" name="verifyManageCourseNavigation" class="com.playwright.qa.test.ManageCoursesTest"/>
+        <method signature="NewUserSignUpTest.EndToEndNewUserdRegisterAndLoginSuccessfullyTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" name="EndToEndNewUserdRegisterAndLoginSuccessfullyTest" class="com.playwright.qa.test.NewUserSignUpTest"/>
+        <method signature="NewUserSignUpTest.verifyNewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" name="verifyNewUserSignUpPage" class="com.playwright.qa.test.NewUserSignUpTest"/>
+        <method signature="LoginTest.verifyLoginPageURLTest()[pri:1, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="verifyLoginPageURLTest" class="com.playwright.qa.test.LoginTest"/>
+        <method signature="LoginTest.loginPageNewUserSignUpButtonTest()[pri:2, instance:com.playwright.qa.test.LoginTest@5a755cc1]" name="loginPageNewUserSignUpButtonTest" class="com.playwright.qa.test.LoginTest"/>
+      </group> <!-- smoke -->
+    </groups>
+    <test started-at="2026-04-27T20:14:23 IST" name="Test" finished-at="2026-04-27T20:22:04 IST" duration-ms="461256">
+      <class name="com.playwright.qa.test.DashboardPageTest">
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:41 IST" name="setUp" finished-at="2026-04-27T20:20:45 IST" duration-ms="3854" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpDashboardPage()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:45 IST" name="setUpDashboardPage" finished-at="2026-04-27T20:20:46 IST" duration-ms="1100" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpDashboardPage -->
+        <test-method signature="CourseNameAndPriceTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:46 IST" name="CourseNameAndPriceTest" finished-at="2026-04-27T20:20:47 IST" duration-ms="897" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CourseNameAndPriceTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:47 IST" name="tearDown" finished-at="2026-04-27T20:20:48 IST" duration-ms="718" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=CourseNameAndPriceTest status=SUCCESS method=DashboardPageTest.CourseNameAndPriceTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:48 IST" name="setUp" finished-at="2026-04-27T20:20:51 IST" duration-ms="3319" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpDashboardPage()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:51 IST" name="setUpDashboardPage" finished-at="2026-04-27T20:20:52 IST" duration-ms="1394" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpDashboardPage -->
+        <test-method signature="CourseTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:52 IST" name="CourseTest" finished-at="2026-04-27T20:20:53 IST" duration-ms="859" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CourseTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:53 IST" name="tearDown" finished-at="2026-04-27T20:20:54 IST" duration-ms="731" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=CourseTest status=SUCCESS method=DashboardPageTest.CourseTest()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:54 IST" name="setUp" finished-at="2026-04-27T20:20:57 IST" duration-ms="3378" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpDashboardPage()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:57 IST" name="setUpDashboardPage" finished-at="2026-04-27T20:20:58 IST" duration-ms="1224" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpDashboardPage -->
+        <test-method signature="verifyAddSpecificCourseToCart(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:58 IST" name="verifyAddSpecificCourseToCart" data-provider="coursesAndPricesData" finished-at="2026-04-27T20:20:59 IST" duration-ms="940" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Selenium For Web Automation]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[₹1500]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyAddSpecificCourseToCart -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:20:59 IST" name="tearDown" finished-at="2026-04-27T20:21:00 IST" duration-ms="730" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyAddSpecificCourseToCart status=SUCCESS method=DashboardPageTest.verifyAddSpecificCourseToCart(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:21:00 IST" name="setUp" finished-at="2026-04-27T20:21:04 IST" duration-ms="3319" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpDashboardPage()[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:21:04 IST" name="setUpDashboardPage" finished-at="2026-04-27T20:21:05 IST" duration-ms="1349" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpDashboardPage -->
+        <test-method signature="verifyCourseNameAndPriceFromTestDataTest(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:21:05 IST" name="verifyCourseNameAndPriceFromTestDataTest" data-provider="coursesAndPricesData" finished-at="2026-04-27T20:21:06 IST" duration-ms="892" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Selenium For Web Automation]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[₹1500]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyCourseNameAndPriceFromTestDataTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3]" started-at="2026-04-27T20:21:06 IST" name="tearDown" finished-at="2026-04-27T20:21:07 IST" duration-ms="803" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyCourseNameAndPriceFromTestDataTest status=SUCCESS method=DashboardPageTest.verifyCourseNameAndPriceFromTestDataTest(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.DashboardPageTest@7ae42ce3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.playwright.qa.test.DashboardPageTest -->
+      <class name="com.playwright.qa.test.LandingPageTest">
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:07 IST" name="setUp" finished-at="2026-04-27T20:21:10 IST" duration-ms="3798" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLandingpage()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:10 IST" name="setUpLandingpage" finished-at="2026-04-27T20:21:10 IST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLandingpage -->
+        <test-method signature="LandingPageCoursesTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:10 IST" name="LandingPageCoursesTest" finished-at="2026-04-27T20:21:12 IST" duration-ms="1521" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LandingPageCoursesTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:12 IST" name="tearDown" finished-at="2026-04-27T20:21:13 IST" duration-ms="704" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LandingPageCoursesTest status=SUCCESS method=LandingPageTest.LandingPageCoursesTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:13 IST" name="setUp" finished-at="2026-04-27T20:21:16 IST" duration-ms="3637" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLandingpage()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:16 IST" name="setUpLandingpage" finished-at="2026-04-27T20:21:16 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLandingpage -->
+        <test-method signature="LandingPageSocialMediaIconsTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:16 IST" name="LandingPageSocialMediaIconsTest" finished-at="2026-04-27T20:21:16 IST" duration-ms="124" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LandingPageSocialMediaIconsTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:16 IST" name="tearDown" finished-at="2026-04-27T20:21:17 IST" duration-ms="783" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LandingPageSocialMediaIconsTest status=SUCCESS method=LandingPageTest.LandingPageSocialMediaIconsTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:17 IST" name="setUp" finished-at="2026-04-27T20:21:21 IST" duration-ms="3464" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLandingpage()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:21 IST" name="setUpLandingpage" finished-at="2026-04-27T20:21:21 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLandingpage -->
+        <test-method signature="LandingPageTitleTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:21 IST" name="LandingPageTitleTest" finished-at="2026-04-27T20:21:21 IST" duration-ms="95" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LandingPageTitleTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6]" started-at="2026-04-27T20:21:21 IST" name="tearDown" finished-at="2026-04-27T20:21:22 IST" duration-ms="878" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=LandingPageTitleTest status=SUCCESS method=LandingPageTest.LandingPageTitleTest()[pri:0, instance:com.playwright.qa.test.LandingPageTest@4f5991f6] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.playwright.qa.test.LandingPageTest -->
+      <class name="com.playwright.qa.test.LoginTest">
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:19:48 IST" name="setUp" finished-at="2026-04-27T20:19:52 IST" duration-ms="4369" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:19:52 IST" name="setUpLoginPage" finished-at="2026-04-27T20:19:52 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method signature="verifyLoginLogOut()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:19:52 IST" name="verifyLoginLogOut" finished-at="2026-04-27T20:19:55 IST" duration-ms="2278" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginLogOut -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:19:55 IST" name="tearDown" finished-at="2026-04-27T20:19:55 IST" duration-ms="749" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyLoginLogOut status=SUCCESS method=LoginTest.verifyLoginLogOut()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:19:55 IST" name="setUp" finished-at="2026-04-27T20:19:59 IST" duration-ms="3460" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="verifyLoginPageURLTest()[pri:1, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:19:59 IST" name="verifyLoginPageURLTest" finished-at="2026-04-27T20:20:00 IST" duration-ms="1093" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginPageURLTest -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:19:59 IST" name="setUpLoginPage" finished-at="2026-04-27T20:19:59 IST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:00 IST" name="tearDown" finished-at="2026-04-27T20:20:01 IST" duration-ms="915" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyLoginPageURLTest status=SUCCESS method=LoginTest.verifyLoginPageURLTest()[pri:1, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:01 IST" name="setUp" finished-at="2026-04-27T20:20:05 IST" duration-ms="4088" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:05 IST" name="setUpLoginPage" finished-at="2026-04-27T20:20:05 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method signature="loginPageNewUserSignUpButtonTest()[pri:2, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:05 IST" name="loginPageNewUserSignUpButtonTest" finished-at="2026-04-27T20:20:06 IST" duration-ms="1055" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginPageNewUserSignUpButtonTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:06 IST" name="tearDown" finished-at="2026-04-27T20:20:07 IST" duration-ms="854" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=loginPageNewUserSignUpButtonTest status=SUCCESS method=LoginTest.loginPageNewUserSignUpButtonTest()[pri:2, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:07 IST" name="setUp" finished-at="2026-04-27T20:20:11 IST" duration-ms="4389" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:11 IST" name="setUpLoginPage" finished-at="2026-04-27T20:20:11 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method signature="loginPageSocialMediaButtonTest()[pri:3, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:11 IST" name="loginPageSocialMediaButtonTest" finished-at="2026-04-27T20:20:13 IST" duration-ms="1288" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginPageSocialMediaButtonTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:13 IST" name="tearDown" finished-at="2026-04-27T20:20:14 IST" duration-ms="1045" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=loginPageSocialMediaButtonTest status=SUCCESS method=LoginTest.loginPageSocialMediaButtonTest()[pri:3, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:14 IST" name="setUp" finished-at="2026-04-27T20:20:18 IST" duration-ms="4802" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:18 IST" name="setUpLoginPage" finished-at="2026-04-27T20:20:18 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method signature="loginWithOutEmailPasswordTest()[pri:4, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:18 IST" name="loginWithOutEmailPasswordTest" finished-at="2026-04-27T20:20:20 IST" duration-ms="1476" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginWithOutEmailPasswordTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:20 IST" name="tearDown" finished-at="2026-04-27T20:20:21 IST" duration-ms="1137" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=loginWithOutEmailPasswordTest status=SUCCESS method=LoginTest.loginWithOutEmailPasswordTest()[pri:4, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:21 IST" name="setUp" finished-at="2026-04-27T20:20:26 IST" duration-ms="4766" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="unregisteredEmailUserTest()[pri:5, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:26 IST" name="unregisteredEmailUserTest" finished-at="2026-04-27T20:20:28 IST" duration-ms="1838" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- unregisteredEmailUserTest -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:26 IST" name="setUpLoginPage" finished-at="2026-04-27T20:20:26 IST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:28 IST" name="tearDown" finished-at="2026-04-27T20:20:28 IST" duration-ms="798" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=unregisteredEmailUserTest status=SUCCESS method=LoginTest.unregisteredEmailUserTest()[pri:5, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:28 IST" name="setUp" finished-at="2026-04-27T20:20:33 IST" duration-ms="4641" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:33 IST" name="setUpLoginPage" finished-at="2026-04-27T20:20:33 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method signature="loginWithEmailAndEmptyPasswordTest()[pri:6, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:33 IST" name="loginWithEmailAndEmptyPasswordTest" finished-at="2026-04-27T20:20:34 IST" duration-ms="1127" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginWithEmailAndEmptyPasswordTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:34 IST" name="tearDown" finished-at="2026-04-27T20:20:36 IST" duration-ms="1311" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=loginWithEmailAndEmptyPasswordTest status=SUCCESS method=LoginTest.loginWithEmailAndEmptyPasswordTest()[pri:6, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:36 IST" name="setUp" finished-at="2026-04-27T20:20:39 IST" duration-ms="3251" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpLoginPage()[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:39 IST" name="setUpLoginPage" finished-at="2026-04-27T20:20:39 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpLoginPage -->
+        <test-method signature="loginWithPasswordAndEmptyEmailTest()[pri:7, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:39 IST" name="loginWithPasswordAndEmptyEmailTest" finished-at="2026-04-27T20:20:40 IST" duration-ms="1150" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginWithPasswordAndEmptyEmailTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.LoginTest@5a755cc1]" started-at="2026-04-27T20:20:40 IST" name="tearDown" finished-at="2026-04-27T20:20:41 IST" duration-ms="975" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=loginWithPasswordAndEmptyEmailTest status=SUCCESS method=LoginTest.loginWithPasswordAndEmptyEmailTest()[pri:7, instance:com.playwright.qa.test.LoginTest@5a755cc1] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.playwright.qa.test.LoginTest -->
+      <class name="com.playwright.qa.test.NewUserSignUpTest">
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:14:24 IST" name="setUp" finished-at="2026-04-27T20:19:04 IST" duration-ms="279925" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpnewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:04 IST" name="setUpnewUserSignUpPage" finished-at="2026-04-27T20:19:05 IST" duration-ms="1146" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpnewUserSignUpPage -->
+        <test-method signature="EndToEndNewUserdRegisterAndLoginSuccessfullyTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:05 IST" name="EndToEndNewUserdRegisterAndLoginSuccessfullyTest" data-provider="signupData" finished-at="2026-04-27T20:19:08 IST" duration-ms="2467" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Ram Kumar]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[admin@email.com]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Admin@123]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Andhra Pradesh]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[Playing,Reading]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- EndToEndNewUserdRegisterAndLoginSuccessfullyTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:08 IST" name="tearDown" finished-at="2026-04-27T20:19:09 IST" duration-ms="1179" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=EndToEndNewUserdRegisterAndLoginSuccessfullyTest status=SUCCESS method=NewUserSignUpTest.EndToEndNewUserdRegisterAndLoginSuccessfullyTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:09 IST" name="setUp" finished-at="2026-04-27T20:19:13 IST" duration-ms="4353" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpnewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:13 IST" name="setUpnewUserSignUpPage" finished-at="2026-04-27T20:19:15 IST" duration-ms="1339" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpnewUserSignUpPage -->
+        <test-method signature="EndToEndNewUserdRegisterAndLoginSuccessfullyTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:15 IST" name="EndToEndNewUserdRegisterAndLoginSuccessfullyTest" data-provider="signupData" finished-at="2026-04-27T20:19:18 IST" duration-ms="3005" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Sam Singh]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[admin1@email.com]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Admin@123]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Uttar Pradesh]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[Swimming,Singing]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- EndToEndNewUserdRegisterAndLoginSuccessfullyTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:18 IST" name="tearDown" finished-at="2026-04-27T20:19:20 IST" duration-ms="2225" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=EndToEndNewUserdRegisterAndLoginSuccessfullyTest status=SUCCESS method=NewUserSignUpTest.EndToEndNewUserdRegisterAndLoginSuccessfullyTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:20 IST" name="setUp" finished-at="2026-04-27T20:19:24 IST" duration-ms="4315" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpnewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:24 IST" name="setUpnewUserSignUpPage" finished-at="2026-04-27T20:19:25 IST" duration-ms="1063" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpnewUserSignUpPage -->
+        <test-method signature="passwordMimimumLengthTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:25 IST" name="passwordMimimumLengthTest" data-provider="signUpPasswordCheckData" finished-at="2026-04-27T20:19:27 IST" duration-ms="1251" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Amit Kumar]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[admin@email.com]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Adm]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Andaman and Nicobar Islands]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[Playing,Dancing]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- passwordMimimumLengthTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:27 IST" name="tearDown" finished-at="2026-04-27T20:19:28 IST" duration-ms="912" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=passwordMimimumLengthTest status=SUCCESS method=NewUserSignUpTest.passwordMimimumLengthTest(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:28 IST" name="setUp" finished-at="2026-04-27T20:19:32 IST" duration-ms="3908" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpnewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:32 IST" name="setUpnewUserSignUpPage" finished-at="2026-04-27T20:19:33 IST" duration-ms="1213" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpnewUserSignUpPage -->
+        <test-method signature="verifyNewUserSignUpEmailAlreadyRegistered(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:33 IST" name="verifyNewUserSignUpEmailAlreadyRegistered" data-provider="signupData" finished-at="2026-04-27T20:19:34 IST" duration-ms="1544" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Ram Kumar]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[admin@email.com]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Admin@123]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Andhra Pradesh]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[Playing,Reading]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyNewUserSignUpEmailAlreadyRegistered -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:34 IST" name="tearDown" finished-at="2026-04-27T20:19:35 IST" duration-ms="699" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyNewUserSignUpEmailAlreadyRegistered status=SUCCESS method=NewUserSignUpTest.verifyNewUserSignUpEmailAlreadyRegistered(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:35 IST" name="setUp" finished-at="2026-04-27T20:19:38 IST" duration-ms="3397" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpnewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:38 IST" name="setUpnewUserSignUpPage" finished-at="2026-04-27T20:19:40 IST" duration-ms="1425" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpnewUserSignUpPage -->
+        <test-method signature="verifyNewUserSignUpEmailAlreadyRegistered(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:40 IST" name="verifyNewUserSignUpEmailAlreadyRegistered" data-provider="signupData" finished-at="2026-04-27T20:19:41 IST" duration-ms="1517" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Sam Singh]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[admin1@email.com]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Admin@123]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Uttar Pradesh]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[Swimming,Singing]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyNewUserSignUpEmailAlreadyRegistered -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:41 IST" name="tearDown" finished-at="2026-04-27T20:19:42 IST" duration-ms="738" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyNewUserSignUpEmailAlreadyRegistered status=SUCCESS method=NewUserSignUpTest.verifyNewUserSignUpEmailAlreadyRegistered(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:42 IST" name="setUp" finished-at="2026-04-27T20:19:45 IST" duration-ms="3394" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpnewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:45 IST" name="setUpnewUserSignUpPage" finished-at="2026-04-27T20:19:47 IST" duration-ms="1283" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpnewUserSignUpPage -->
+        <test-method signature="verifyNewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:47 IST" name="verifyNewUserSignUpPage" finished-at="2026-04-27T20:19:47 IST" duration-ms="342" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyNewUserSignUpPage -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2]" started-at="2026-04-27T20:19:47 IST" name="tearDown" finished-at="2026-04-27T20:19:48 IST" duration-ms="937" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyNewUserSignUpPage status=SUCCESS method=NewUserSignUpTest.verifyNewUserSignUpPage()[pri:0, instance:com.playwright.qa.test.NewUserSignUpTest@1869fbd2] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.playwright.qa.test.NewUserSignUpTest -->
+      <class name="com.playwright.qa.test.ManageCoursesTest">
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:21:50 IST" name="setUp" finished-at="2026-04-27T20:21:53 IST" duration-ms="3366" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpDashboardPage()[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:21:53 IST" name="setUpDashboardPage" finished-at="2026-04-27T20:21:55 IST" duration-ms="1788" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpDashboardPage -->
+        <test-method signature="searchCourseNameTest(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:21:55 IST" name="searchCourseNameTest" data-provider="coursesAndPricesData" finished-at="2026-04-27T20:21:58 IST" duration-ms="2781" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Selenium For Web Automation]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[₹1500]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- searchCourseNameTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:21:58 IST" name="tearDown" finished-at="2026-04-27T20:21:59 IST" duration-ms="708" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=searchCourseNameTest status=SUCCESS method=ManageCoursesTest.searchCourseNameTest(java.lang.String,java.lang.String)[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:21:59 IST" name="setUp" finished-at="2026-04-27T20:22:02 IST" duration-ms="3142" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpDashboardPage()[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:22:02 IST" name="setUpDashboardPage" finished-at="2026-04-27T20:22:03 IST" duration-ms="1701" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpDashboardPage -->
+        <test-method signature="verifyManageCourseNavigation()[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:22:03 IST" name="verifyManageCourseNavigation" finished-at="2026-04-27T20:22:03 IST" duration-ms="15" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyManageCourseNavigation -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38]" started-at="2026-04-27T20:22:03 IST" name="tearDown" finished-at="2026-04-27T20:22:04 IST" duration-ms="803" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyManageCourseNavigation status=SUCCESS method=ManageCoursesTest.verifyManageCourseNavigation()[pri:0, instance:com.playwright.qa.test.ManageCoursesTest@38234a38] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.playwright.qa.test.ManageCoursesTest -->
+      <class name="com.playwright.qa.test.CartPageTest">
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:22 IST" name="setUp" finished-at="2026-04-27T20:21:25 IST" duration-ms="3414" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpCartPage()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:25 IST" name="setUpCartPage" finished-at="2026-04-27T20:21:26 IST" duration-ms="1411" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpCartPage -->
+        <test-method signature="UpdateAndRemoveCartTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:26 IST" name="UpdateAndRemoveCartTest" finished-at="2026-04-27T20:21:28 IST" duration-ms="1217" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- UpdateAndRemoveCartTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:28 IST" name="tearDown" finished-at="2026-04-27T20:21:28 IST" duration-ms="743" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=UpdateAndRemoveCartTest status=SUCCESS method=CartPageTest.UpdateAndRemoveCartTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:28 IST" name="setUp" finished-at="2026-04-27T20:21:32 IST" duration-ms="3690" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpCartPage()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:32 IST" name="setUpCartPage" finished-at="2026-04-27T20:21:33 IST" duration-ms="1162" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpCartPage -->
+        <test-method signature="enrollNowCourseTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:33 IST" name="enrollNowCourseTest" finished-at="2026-04-27T20:21:36 IST" duration-ms="2422" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- enrollNowCourseTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:36 IST" name="tearDown" finished-at="2026-04-27T20:21:37 IST" duration-ms="893" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=enrollNowCourseTest status=SUCCESS method=CartPageTest.enrollNowCourseTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:37 IST" name="setUp" finished-at="2026-04-27T20:21:40 IST" duration-ms="3236" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpCartPage()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:40 IST" name="setUpCartPage" finished-at="2026-04-27T20:21:41 IST" duration-ms="1276" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpCartPage -->
+        <test-method signature="toastMessageTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:41 IST" name="toastMessageTest" finished-at="2026-04-27T20:21:43 IST" duration-ms="1503" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- toastMessageTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:43 IST" name="tearDown" finished-at="2026-04-27T20:21:43 IST" duration-ms="724" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=toastMessageTest status=SUCCESS method=CartPageTest.toastMessageTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(org.testng.ITestContext)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:43 IST" name="setUp" finished-at="2026-04-27T20:21:47 IST" duration-ms="3468" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5762658b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="setUpCartPage()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:47 IST" name="setUpCartPage" finished-at="2026-04-27T20:21:48 IST" duration-ms="1293" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpCartPage -->
+        <test-method signature="verifyCartEndToEndFlowTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:48 IST" name="verifyCartEndToEndFlowTest" finished-at="2026-04-27T20:21:49 IST" duration-ms="1071" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyCartEndToEndFlowTest -->
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5]" started-at="2026-04-27T20:21:49 IST" name="tearDown" finished-at="2026-04-27T20:21:50 IST" duration-ms="746" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=verifyCartEndToEndFlowTest status=SUCCESS method=CartPageTest.verifyCartEndToEndFlowTest()[pri:0, instance:com.playwright.qa.test.CartPageTest@484094a5] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.playwright.qa.test.CartPageTest -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite Smoke -->
+</testng-results>
