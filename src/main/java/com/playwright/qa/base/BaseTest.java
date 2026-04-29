@@ -21,8 +21,8 @@ import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.ViewportSize;
 
 @Listeners({
-    com.playwright.qa.listener.ExtentListener.class,
-    com.playwright.qa.listener.RetryListener.class
+        com.playwright.qa.listener.ExtentListener.class,
+        com.playwright.qa.listener.RetryListener.class
 })
 public class BaseTest {
 
@@ -40,6 +40,14 @@ public class BaseTest {
     }
 
     private static final String BASE_URL = ConfigReader.get("base.url");
+
+    // ✅ FIX 1: Smart HEADLESS handling (CI + System property + config)
+    private static final boolean HEADLESS =
+            Boolean.parseBoolean(System.getProperty("headless",
+                    System.getenv().getOrDefault("CI", "false").equals("true")
+                            ? "true"
+                            : ConfigReader.get("headless")));
+
     private static final int TIMEOUT = ConfigReader.getInt("timeout");
 
     @BeforeMethod(groups = {"smoke", "regression"}, alwaysRun = true)
@@ -50,22 +58,13 @@ public class BaseTest {
         logger.info("🔥 Thread {} running on browser: {}",
                 Thread.currentThread().getId(), browserName);
 
+        // ✅ DEBUG LOG
+        logger.info("🚀 HEADLESS MODE: {}", HEADLESS);
+
         playwright = Playwright.create();
 
-        // ============================
-        // ✅ FIX 1: Runtime Headless (CRITICAL)
-        // ============================
-        boolean headless = Boolean.parseBoolean(
-                System.getProperty("headless", ConfigReader.get("headless"))
-        );
-
-        logger.info("🚀 Headless mode: {}", headless);
-        logger.info("System headless property: {}", System.getProperty("headless"));
-        logger.info("Config headless value: {}", ConfigReader.get("headless"));
-        // ============================
-
         BrowserType.LaunchOptions options = new BrowserType.LaunchOptions()
-                .setHeadless(headless);
+                .setHeadless(HEADLESS);
 
         browser = switch (browserName.toLowerCase()) {
             case "firefox" -> playwright.firefox().launch(options);
@@ -78,7 +77,9 @@ public class BaseTest {
                         .setViewportSize(new ViewportSize(1440, 900))
         );
 
-        tlPage.set(context.newPage());
+        // ✅ Create page safely
+        Page newPage = context.newPage();
+        tlPage.set(newPage);
 
         page().setDefaultTimeout(TIMEOUT);
         page().navigate(BASE_URL);
@@ -90,35 +91,30 @@ public class BaseTest {
     @AfterMethod(groups = {"smoke", "regression"}, alwaysRun = true)
     public void tearDown(ITestResult result) {
 
-        if (!result.isSuccess()) {
-            logger.error("❌ FAILED TEST: {}", result.getName());
-
-            // ============================
-            // ✅ FIX 2: Null Safety (CRITICAL)
-            // ============================
-            if (page() != null) {
+        // ✅ FIX 2: NULL SAFETY (avoid crash if browser didn't start)
+        if (page() != null) {
+            if (!result.isSuccess()) {
+                logger.error("❌ FAILED TEST: {}", result.getName());
                 logger.error("👉 URL at failure: {}", page().url());
             } else {
-                logger.error("⚠️ Page is null — browser likely failed to launch");
+                logger.info("✅ PASSED TEST: {}", result.getName());
             }
-            // ============================
-
         } else {
-            logger.info("✅ PASSED TEST: {}", result.getName());
+            logger.error("⚠️ Page is NULL - Browser likely failed to launch");
         }
 
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
 
-        // Cleanup
+        // ✅ Clean up safely
         if (page() != null) page().close();
         if (context != null) context.close();
         if (browser != null) browser.close();
         if (playwright != null) playwright.close();
 
-        tlPage.remove(); // ✅ prevent memory leaks
+        tlPage.remove(); // prevent memory leaks
     }
 }
