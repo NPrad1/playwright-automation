@@ -37,7 +37,8 @@ public class BaseTest {
 
 	    private static final String BASE_URL     = ConfigReader.get("base.url");
 	  //  private static final String BROWSER_TYPE = ConfigReader.get("browser.type");
-	    private static final boolean HEADLESS    = ConfigReader.getBoolean("headless");
+	    private static final boolean HEADLESS =
+	            Boolean.parseBoolean(System.getProperty("headless", ConfigReader.get("headless")));
 	    private static final int TIMEOUT         = ConfigReader.getInt("timeout");
 
 	    @SuppressWarnings("deprecation")
