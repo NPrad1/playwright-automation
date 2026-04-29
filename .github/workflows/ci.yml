@@ -25,4 +25,4 @@ jobs:
         run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"
 
       - name: Run Tests
-  run: mvn test -Dheadless=true
+        run: mvn test -Dheadless=true
