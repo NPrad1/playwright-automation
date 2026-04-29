@@ -9,13 +9,13 @@
     <artifactId>playwright-learn-automation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <properties>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
-        <!-- ✅ Control which suite to run from CMD -->
-        <suiteFile>src/test/resources/testng.xml</suiteFile>
-    </properties>
+  <properties>
+    <!-- Use stable Java version -->
+    <maven.compiler.release>17</maven.compiler.release>
 
+    <!-- Keep your suite config -->
+    <suiteFile>src/test/resources/testng.xml</suiteFile>
+</properties>
     <dependencies>
 
         <!-- ✅ Playwright -->
@@ -85,15 +85,14 @@
         <plugins>
 
             <!-- ✅ Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <source>20</source>
-                    <target>20</target>
-                </configuration>
-            </plugin>
+           <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.13.0</version>
+    <configuration>
+        <release>17</release>
+    </configuration>
+</plugin>
 
             <!-- ✅ Surefire Plugin — THIS WAS MISSING -->
             <plugin>
