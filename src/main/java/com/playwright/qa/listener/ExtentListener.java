@@ -1,7 +1,7 @@
+
 package com.playwright.qa.listener;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.testng.ITestContext;
@@ -13,73 +13,79 @@ import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Page;
 import com.playwright.qa.base.BaseTest;
 
-public class ExtentListener implements ITestListener{
-	
-	 private static ExtentReports extent = ExtentManager.getInstance();
-	    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+public class ExtentListener implements ITestListener {
 
-	    @Override
-	    public void onTestStart(ITestResult result) {
+    private static ExtentReports extent = ExtentManager.getInstance();
+    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-	        int retryCount = result.getMethod().getCurrentInvocationCount();
+    @Override
+    public void onTestStart(ITestResult result) {
 
-	        ExtentTest extentTest = extent.createTest(
-	                result.getMethod().getMethodName() + " (Attempt: " + retryCount + ")"
-	        );
+        int retryCount = result.getMethod().getCurrentInvocationCount();
 
-	        test.set(extentTest);
-	    }
+        ExtentTest extentTest = extent.createTest(
+                result.getMethod().getMethodName() + " (Attempt: " + retryCount + ")"
+        );
 
-	    @Override
-	    public void onTestSuccess(ITestResult result) {
-	        test.get().pass("Test Passed");
-	    }
+        test.set(extentTest);
+    }
 
-	    @Override
-	    public void onTestFailure(ITestResult result) {
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        test.get().pass("Test Passed");
+    }
 
-	        int retryCount = result.getMethod().getCurrentInvocationCount();
+    @Override
+    public void onTestFailure(ITestResult result) {
 
-	        test.get().fail("Test Failed - Attempt: " + retryCount);
-	        test.get().fail(result.getThrowable());
+        int retryCount = result.getMethod().getCurrentInvocationCount();
 
-	        try {
-	        	Page page = (Page) result.getTestContext().getAttribute("page");
+        test.get().fail("Test Failed on Attempt: " + retryCount);
+        test.get().fail(result.getThrowable());
 
-	            if (page != null) {
+        try {
+            // ✅ Get thread-safe page
+            Page page = BaseTest.getPage();
 
-	                String screenshotDir = System.getProperty("user.dir") + "/test-output/screenshots/";
-	                Files.createDirectories(Paths.get(screenshotDir));
+            if (page != null) {
 
-	                String fileName = result.getMethod().getMethodName()
-	                        + "_retry_" + retryCount + ".png";
+                String screenshotDir = System.getProperty("user.dir") + "/test-output/screenshots/";
+                Files.createDirectories(Paths.get(screenshotDir));
 
-	                String filePath = screenshotDir + fileName;
+                String fileName = result.getMethod().getMethodName()
+                        + "_retry_" + retryCount + ".png";
 
-	                // Screenshot BEFORE browser closes
-	                page.screenshot(new Page.ScreenshotOptions()
-	                        .setPath(Paths.get(filePath))
-	                        .setFullPage(true));
+                String filePath = screenshotDir + fileName;
 
-	                String relativePath = "screenshots/" + fileName;
+                // ✅ Prevent crash if page already closed
+                if (!page.isClosed()) {
 
-	                test.get().addScreenCaptureFromPath(relativePath, "Failure Screenshot");
-	            }
+                    page.screenshot(new Page.ScreenshotOptions()
+                            .setPath(Paths.get(filePath))
+                            .setFullPage(true));
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
+                    test.get().addScreenCaptureFromPath(
+                            "screenshots/" + fileName,
+                            "Failure Screenshot"
+                    );
 
-	    @Override
-	    public void onTestSkipped(ITestResult result) {
-	        test.get().skip("Test Skipped");
-	    }
+                } else {
+                    test.get().info("Page already closed, screenshot skipped");
+                }
+            }
 
-	    @Override
-	    public void onFinish(ITestContext context) {
-	        extent.flush();
-	    }
+        } catch (Exception e) {
+            test.get().warning("Screenshot failed: " + e.getMessage());
+        }
+    }
 
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        test.get().skip("Test Skipped");
+    }
 
+    @Override
+    public void onFinish(ITestContext context) {
+        extent.flush();
+    }
 }
