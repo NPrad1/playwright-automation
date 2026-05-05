@@ -18,8 +18,8 @@ steps:
   - name: Set up Java
     uses: actions/setup-java@v3
     with:
-      distribution: 'temurin'
-      java-version: '17'
+      distribution: temurin
+      java-version: 17
 
   - name: Build Project
     working-directory: playwright-learn-automation
@@ -41,4 +41,3 @@ steps:
         playwright-learn-automation/test-results/
         playwright-learn-automation/playwright-report/
 ```
-
