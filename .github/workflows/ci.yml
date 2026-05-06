@@ -27,6 +27,3 @@ jobs:
 
       - name: Run Tests
         run: mvn clean test -DsuiteXmlFile=testng-smoke.xml -Dheadless=true
-✅ Step 4: Commit directly from GitHub
-
-Click:
