@@ -10,7 +10,6 @@ jobs:
 test:
 runs-on: ubuntu-latest
 
-```
 steps:
   - name: Checkout code
     uses: actions/checkout@v4
@@ -26,4 +25,3 @@ steps:
 
   - name: Run Tests
     run: mvn clean test -DsuiteXmlFile=testng-smoke.xml -Dheadless=true
-```
