@@ -1,29 +1,110 @@
-name: Run Playwright Tests
+name: Playwright Advanced CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+push:
+branches: [ "main" ]
+pull_request:
+branches: [ "main" ]
+schedule:
+- cron: "0 2 * * *" # Nightly run (2 AM UTC)
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+smoke-tests:
+name: Smoke Tests (Fast Feedback)
+runs-on: ubuntu-latest
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
 
-      - name: Install Playwright Browsers
-        run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"
+  - name: Setup Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '17'
 
-      - name: Run Tests
-        run: mvn clean test -DsuiteXmlFile=testng-smoke.xml -Dheadless=true
+  - name: Cache Maven
+    uses: actions/cache@v4
+    with:
+      path: ~/.m2
+      key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
+  - name: Install Playwright Browsers
+    run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+
+  - name: Run Smoke Suite
+    run: mvn clean test -DsuiteXmlFile=testng-smoke.xml -Dheadless=true
+
+  - name: Upload Reports
+    if: always()
+    uses: actions/upload-artifact@v4
+    with:
+      name: smoke-report
+      path: test-output/
+
+cross-browser:
+name: Cross Browser Tests
+runs-on: ubuntu-latest
+needs: smoke-tests
+
+strategy:
+  matrix:
+    browser: [chromium, firefox, webkit]
+
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
+
+  - name: Setup Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '17'
+
+  - name: Cache Maven
+    uses: actions/cache@v4
+    with:
+      path: ~/.m2
+      key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
+  - name: Install Playwright Browsers
+    run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+
+  - name: Run Tests on Browser
+    run: mvn test -Dbrowser=${{ matrix.browser }} -Dheadless=true
+
+  - name: Upload Reports
+    if: always()
+    uses: actions/upload-artifact@v4
+    with:
+      name: report-${{ matrix.browser }}
+      path: test-output/
+
+regression-nightly:
+name: Full Regression (Nightly)
+runs-on: ubuntu-latest
+if: github.event_name == 'schedule'
+
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
+
+  - name: Setup Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '17'
+
+  - name: Install Playwright Browsers
+    run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+
+  - name: Run Full Suite
+    run: mvn clean test -DsuiteXmlFile=testng.xml -Dheadless=true
+
+  - name: Upload Reports
+    if: always()
+    uses: actions/upload-artifact@v4
+    with:
+      name: regression-report
+      path: test-output/
