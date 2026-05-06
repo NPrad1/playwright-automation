@@ -2,9 +2,11 @@ name: Run Playwright Tests
 
 on:
 push:
-branches: [ "main" ]
+branches:
+- main
 pull_request:
-branches: [ "main" ]
+branches:
+- main
 
 jobs:
 test:
@@ -17,7 +19,7 @@ steps:
   - name: Setup Java
     uses: actions/setup-java@v4
     with:
-      distribution: 'temurin'
+      distribution: temurin
       java-version: '17'
 
   - name: Install Playwright Browsers
