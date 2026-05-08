@@ -1,8 +1,33 @@
-target/ 
-test-output/ 
-allure-results/ 
-*.log 
-*.class 
-.classpath 
-.project 
-.settings/ 
+
+# Maven build output
+target/
+
+# Playwright test artifacts
+test-output/screenshots/
+test-output/traces/
+test-output/videos/
+
+# Allure results (generated each run)
+allure-results/
+allure-report/
+
+# Extent Report (generated each run)
+test-output/ExtentReport.html
+
+# IDE files
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Keep the test-output folder structure but ignore contents
+!test-output/.gitkeep
