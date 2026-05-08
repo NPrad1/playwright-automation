@@ -15,77 +15,81 @@ import com.playwright.qa.base.BaseTest;
 
 public class ExtentListener implements ITestListener {
 
-    private static ExtentReports extent = ExtentManager.getInstance();
-    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+	 private static final ExtentReports extent = ExtentManager.getInstance();
 
-    @Override
-    public void onTestStart(ITestResult result) {
+	    // ✅ ThreadLocal — each parallel thread owns its own ExtentTest node
+	    private static final ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-        int retryCount = result.getMethod().getCurrentInvocationCount();
+	    @Override
+	    public void onTestStart(ITestResult result) {
+	        int retryCount = result.getMethod().getCurrentInvocationCount();
+	        ExtentTest extentTest = extent.createTest(
+	                result.getMethod().getMethodName() + " (Attempt: " + retryCount + ")"
+	        );
+	        test.set(extentTest);
+	    }
 
-        ExtentTest extentTest = extent.createTest(
-                result.getMethod().getMethodName() + " (Attempt: " + retryCount + ")"
-        );
+	    @Override
+	    public void onTestSuccess(ITestResult result) {
+	        test.get().pass("✅ Test Passed");
+	    }
 
-        test.set(extentTest);
-    }
+	    @Override
+	    public void onTestFailure(ITestResult result) {
+	        int retryCount = result.getMethod().getCurrentInvocationCount();
+	        test.get().fail("❌ Test Failed on Attempt: " + retryCount);
+	        test.get().fail(result.getThrowable());
 
-    @Override
-    public void onTestSuccess(ITestResult result) {
-        test.get().pass("Test Passed");
-    }
+	        // ── Screenshot (captured live — page still open here) ─────────────────
+	        try {
+	            Page page = BaseTest.getPage();
+	            if (page != null && !page.isClosed()) {
+	                String screenshotDir = System.getProperty("user.dir") + "/test-output/screenshots/";
+	                Files.createDirectories(Paths.get(screenshotDir));
 
-    @Override
-    public void onTestFailure(ITestResult result) {
+	                String fileName = result.getMethod().getMethodName()
+	                        + "_retry_" + retryCount + ".png";
+	                String filePath = screenshotDir + fileName;
 
-        int retryCount = result.getMethod().getCurrentInvocationCount();
+	                page.screenshot(new Page.ScreenshotOptions()
+	                        .setPath(Paths.get(filePath))
+	                        .setFullPage(true));
 
-        test.get().fail("Test Failed on Attempt: " + retryCount);
-        test.get().fail(result.getThrowable());
+	                test.get().addScreenCaptureFromPath(
+	                        "screenshots/" + fileName,
+	                        "📸 Failure Screenshot"
+	                );
+	            } else {
+	                test.get().info("Page already closed — screenshot skipped");
+	            }
+	        } catch (Exception e) {
+	            test.get().warning("Screenshot failed: " + e.getMessage());
+	        }
 
-        try {
-            // ✅ Get thread-safe page
-            Page page = BaseTest.getPage();
+	        // ── Trace & Video links ────────────────────────────────────────────────
+	        // NOTE: These attributes are set in BaseTest.tearDown() which runs AFTER
+	        //       this listener. They will be null here. Links are attached in
+	        //       ArtifactReporter.generateReport() which runs after all tests.
+	        // This block is intentionally left as a no-op — see ArtifactReporter.java
+	    }
 
-            if (page != null) {
+	    @Override
+	    public void onTestSkipped(ITestResult result) {
+	        test.get().skip("⚠️ Test Skipped");
+	    }
 
-                String screenshotDir = System.getProperty("user.dir") + "/test-output/screenshots/";
-                Files.createDirectories(Paths.get(screenshotDir));
+	    @Override
+	    public void onFinish(ITestContext context) {
+	        extent.flush();
+	    }
 
-                String fileName = result.getMethod().getMethodName()
-                        + "_retry_" + retryCount + ".png";
+	    // ✅ Package-private getter so ArtifactReporter can update the same node
+	    static ThreadLocal<ExtentTest> getTestThreadLocal() {
+	        return test;
+	    }
 
-                String filePath = screenshotDir + fileName;
+	    static ExtentReports getExtent() {
+	        return extent;
+	    }
 
-                // ✅ Prevent crash if page already closed
-                if (!page.isClosed()) {
-
-                    page.screenshot(new Page.ScreenshotOptions()
-                            .setPath(Paths.get(filePath))
-                            .setFullPage(true));
-
-                    test.get().addScreenCaptureFromPath(
-                            "screenshots/" + fileName,
-                            "Failure Screenshot"
-                    );
-
-                } else {
-                    test.get().info("Page already closed, screenshot skipped");
-                }
-            }
-
-        } catch (Exception e) {
-            test.get().warning("Screenshot failed: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public void onTestSkipped(ITestResult result) {
-        test.get().skip("Test Skipped");
-    }
-
-    @Override
-    public void onFinish(ITestContext context) {
-        extent.flush();
-    }
 }

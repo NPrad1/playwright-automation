@@ -1,5 +1,9 @@
 <suite name="Full Suite" parallel="tests" thread-count="3">
 
+  <listeners>
+    <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+  </listeners>
+
   <test name="Chrome">
     <parameter name="browser" value="chromium"/>
     <classes>

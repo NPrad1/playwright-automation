@@ -1,120 +1,137 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.learnautomation</groupId>
-    <artifactId>playwright-learn-automation</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
-  <properties>
-    <!-- Use stable Java version -->
-    <maven.compiler.release>17</maven.compiler.release>
-
-    <!-- Keep your suite config -->
-    <suiteFile>src/test/resources/testng.xml</suiteFile>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>com.learnautomation</groupId>
+<artifactId>playwright-learn-automation</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+<properties>
+<!--  Java  -->
+<maven.compiler.release>17</maven.compiler.release>
+<!--  UTF-8 Encoding  -->
+<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+<!--  Versions  -->
+<playwright.version>1.44.0</playwright.version>
+<testng.version>7.10.1</testng.version>
+<log4j.version>2.23.1</log4j.version>
+<allure.version>2.27.0</allure.version>
+<aspectj.version>1.9.21</aspectj.version>
+<!--  Default Suite  -->
+<suiteFile>src/test/resources/testng.xml</suiteFile>
 </properties>
-    <dependencies>
-
-        <!-- ✅ Playwright -->
-        <dependency>
-            <groupId>com.microsoft.playwright</groupId>
-            <artifactId>playwright</artifactId>
-            <version>1.44.0</version>
-        </dependency>
-
-        <!-- ✅ TestNG -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.10.1</version>
-        </dependency>
-
-        <!-- ✅ Log4j2 API -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.23.1</version>
-        </dependency>
-
-        <!-- ✅ Log4j2 Core -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.23.1</version>
-        </dependency>
-        
-        <dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-slf4j2-impl</artifactId>
-    <version>2.23.1</version>
+<dependencies>
+<!--  Playwright  -->
+<dependency>
+<groupId>com.microsoft.playwright</groupId>
+<artifactId>playwright</artifactId>
+<version>${playwright.version}</version>
 </dependency>
-
-        <!-- ✅ ExtentReports -->
-        <dependency>
-            <groupId>com.aventstack</groupId>
-            <artifactId>extentreports</artifactId>
-            <version>5.1.1</version>
-        </dependency>
-
-        <!-- ✅ AssertJ -->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.25.3</version>
-        </dependency>
-
-        <!-- ✅ Apache POI -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>5.2.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>5.2.5</version>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <plugins>
-
-            <!-- ✅ Compiler Plugin -->
-           <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.13.0</version>
-    <configuration>
-        <release>17</release>
-    </configuration>
+<!--  TestNG  -->
+<dependency>
+<groupId>org.testng</groupId>
+<artifactId>testng</artifactId>
+<version>${testng.version}</version>
+</dependency>
+<!--  Log4j2  -->
+<dependency>
+<groupId>org.apache.logging.log4j</groupId>
+<artifactId>log4j-api</artifactId>
+<version>${log4j.version}</version>
+</dependency>
+<dependency>
+<groupId>org.apache.logging.log4j</groupId>
+<artifactId>log4j-core</artifactId>
+<version>${log4j.version}</version>
+</dependency>
+<!--  SLF4J Bridge  -->
+<dependency>
+<groupId>org.apache.logging.log4j</groupId>
+<artifactId>log4j-slf4j2-impl</artifactId>
+<version>${log4j.version}</version>
+</dependency>
+<!--  Extent Reports  -->
+<dependency>
+<groupId>com.aventstack</groupId>
+<artifactId>extentreports</artifactId>
+<version>5.1.1</version>
+</dependency>
+<!--  AssertJ  -->
+<dependency>
+<groupId>org.assertj</groupId>
+<artifactId>assertj-core</artifactId>
+<version>3.25.3</version>
+</dependency>
+<!--  Apache POI  -->
+<dependency>
+<groupId>org.apache.poi</groupId>
+<artifactId>poi</artifactId>
+<version>5.2.5</version>
+</dependency>
+<dependency>
+<groupId>org.apache.poi</groupId>
+<artifactId>poi-ooxml</artifactId>
+<version>5.2.5</version>
+</dependency>
+<!--  Allure TestNG  -->
+<dependency>
+<groupId>io.qameta.allure</groupId>
+<artifactId>allure-testng</artifactId>
+<version>${allure.version}</version>
+</dependency>
+<!--  AspectJ  -->
+<dependency>
+<groupId>org.aspectj</groupId>
+<artifactId>aspectjweaver</artifactId>
+<version>${aspectj.version}</version>
+</dependency>
+</dependencies>
+<build>
+<plugins>
+<!--  Maven Compiler Plugin  -->
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-compiler-plugin</artifactId>
+<version>3.13.0</version>
+<configuration>
+<release>17</release>
+<encoding>UTF-8</encoding>
+</configuration>
 </plugin>
-
-            <!-- ✅ Surefire Plugin — THIS WAS MISSING -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
-                <configuration>
-                    <suiteXmlFiles>
-                        <!-- Uses property so you can override from CMD -->
-                        <suiteXmlFile>${suiteFile}</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
-            </plugin>
-
-            <!-- ✅ Exec Plugin — for Playwright browser install -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.6.2</version>
-            </plugin>
-
-        </plugins>
-    </build>
-
+<!--  Maven Surefire Plugin  -->
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-surefire-plugin</artifactId>
+<version>3.2.5</version>
+<configuration>
+<!--  ✅ FIX #1 — Use Maven property instead of hardcoded local path  -->
+<!--     Works on any machine and in CI without changes               -->
+<argLine> -Dfile.encoding=UTF-8 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" </argLine>
+<!--  UTF-8 System Properties  -->
+<systemPropertyVariables>
+<file.encoding>UTF-8</file.encoding>
+</systemPropertyVariables>
+<!--  TestNG Suite  -->
+<suiteXmlFiles>
+<suiteXmlFile>${suiteFile}</suiteXmlFile>
+</suiteXmlFiles>
+</configuration>
+</plugin>
+<!--  Exec Maven Plugin  -->
+<plugin>
+<groupId>org.codehaus.mojo</groupId>
+<artifactId>exec-maven-plugin</artifactId>
+<version>3.6.2</version>
+</plugin>
+<!--  Allure Maven Plugin  -->
+<plugin>
+<groupId>io.qameta.allure</groupId>
+<artifactId>allure-maven</artifactId>
+<version>2.12.0</version>
+<configuration>
+<reportVersion>${allure.version}</reportVersion>
+<resultsDirectory> ${project.build.directory}/allure-results </resultsDirectory>
+</configuration>
+</plugin>
+</plugins>
+</build>
 </project>
