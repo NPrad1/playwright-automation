@@ -38,11 +38,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # ✅ FIX #7 — Install Playwright browsers before running tests
-      #    Without this step, tests fail in CI with "Executable doesn't exist" error
-      - name: Install Playwright Browsers
-        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI \
-             -D exec.args="install --with-deps"
+    - name: Install Playwright Browsers
+  run: mvn exec:java -e "-Dexec.mainClass=com.microsoft.playwright.CLI" "-Dexec.args=install --with-deps"
 
       - name: Run Tests
         run: |
