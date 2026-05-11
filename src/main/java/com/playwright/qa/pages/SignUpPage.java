@@ -13,6 +13,7 @@ public class SignUpPage {
 	private Locator awsCheckBoxLocator;
 	private Locator javaScriptCheckBoxLocator;
 	private Locator seleniumCheckBoxLocator;
+	private Locator jMeterCheckBoxLocator;
 	private Locator maleCheckBoxLocator;
 	private Locator femaleCheckBoxLocator;
 	private Locator stateDropdownLocator;
@@ -35,8 +36,11 @@ public class SignUpPage {
 		emailLocator=page.getByPlaceholder("Email");
 		passwordLocator=page.getByPlaceholder("Password");
 		javaScriptCheckBoxLocator=page.locator("//label[text()='JavaScript']//preceding::input[1]");
-		playwrightCheckBoxLocator=page.locator("//label[normalize-space()='PlayWright']//preceding::input[1]");
+		playwrightCheckBoxLocator=page.getByLabel("Playwright");
+		
+		//playwrightCheckBoxLocator=page.locator("//label[normalize-space()='PlayWright']//preceding::input[1]");)
 		awsCheckBoxLocator=page.locator("//label[text()='AWS']//preceding::input[1]");
+		jMeterCheckBoxLocator=page.getByLabel("JMeter");
 		seleniumCheckBoxLocator=page.locator("//label[text()='Selenium']//preceding::input[1]");
 		maleCheckBoxLocator=page.locator("//input[@value='Male']");
 		femaleCheckBoxLocator=page.locator("//input[@value='Female']");
@@ -66,8 +70,9 @@ public class SignUpPage {
         passwordLocator.fill(password);
 
         // Selecting skills (can be dynamic later)
-        javaScriptCheckBoxLocator.check();
-       // playwrightCheckBoxLocator.check();
+       // javaScriptCheckBoxLocator.check();
+     //  playwrightCheckBoxLocator.check();
+        jMeterCheckBoxLocator.check();
 
         // Gender selection
         maleCheckBoxLocator.check();

@@ -1,18 +1,15 @@
-
 # Maven build output
 target/
 
-# Playwright test artifacts
-test-output/screenshots/
-test-output/traces/
-test-output/videos/
+# TestNG / Playwright reports
+test-output/
 
-# Allure results (generated each run)
+# Keep empty folder if needed
+!test-output/.gitkeep
+
+# Allure results
 allure-results/
 allure-report/
-
-# Extent Report (generated each run)
-test-output/ExtentReport.html
 
 # IDE files
 .idea/
@@ -28,6 +25,3 @@ Thumbs.db
 # Logs
 logs/
 *.log
-
-# Keep the test-output folder structure but ignore contents
-!test-output/.gitkeep

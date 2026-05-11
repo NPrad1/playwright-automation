@@ -2,7 +2,7 @@
     FIX #3: Added parallel="methods" so thread-count="5" actually works.
     Without parallel attribute, TestNG ignores thread-count entirely.
  -->
-<suite name="Suite Smoke" verbose="1" parallel="methods" thread-count="5">
+<suite name="Suite Smoke" verbose="1" parallel="classes" thread-count="2">
 <listeners>
 <!--  Allure reporting  -->
 <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
