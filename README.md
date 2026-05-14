@@ -1,240 +1,312 @@
 # Playwright Automation Framework
 
-Enterprise-grade UI automation framework built using Playwright + Java + TestNG with support for cross-browser execution, retry mechanisms, reporting, CI/CD integration, and data-driven testing.
+Scalable UI automation framework built using Playwright + Java + TestNG following Page Object Model design principles.
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
-- Playwright
-- Java
-- TestNG
-- Maven
-- GitHub Actions
-- Extent Reports
-- Log4j2
-- Apache POI (Excel Data Handling)
+| Tool | Purpose |
+|---|---|
+| Java 17 | Core language |
+| Playwright | Browser automation |
+| TestNG | Test execution and suite management |
+| Maven | Build and dependency management |
+| Log4j2 | Centralized logging |
+| Extent Reports | Execution summary reporting |
+| Allure Reports | Deep debug reporting with artifacts |
+| Apache POI | Excel-based data-driven testing |
+| GitHub Actions | CI/CD pipeline |
 
 ---
 
-## 📌 Framework Features
+## Framework Highlights
 
-- Cross-browser testing
-- Parallel execution support
+- Cross-browser execution (Chromium, Firefox, WebKit)
+- Parallel test execution using ThreadLocal
 - Retry mechanism for flaky tests
 - Screenshot capture on failure
-- Extent reporting integration
+- Playwright trace generation
+- Failure video recording
+- Dual reporting — Extent + Allure
+- Config-driven execution
 - Data-driven testing using Excel
-- Page Object Model (POM)
-- Maven-based execution
-- Config-driven framework
-- GitHub Actions CI integration
-- Reusable utility classes
-- TestNG suite management
+- CI/CD integration via GitHub Actions
 
 ---
-## 📁 Project Structure
 
+## Application Under Test
+
+```text
+https://freelance-learn-automation.vercel.app
 ```
+
+---
+
+## Framework Architecture
+
+```text
 playwright-learn-automation/
+│
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
+│
 ├── src/
 │   ├── main/java/com/playwright/qa/
 │   │   ├── base/
 │   │   │   ├── BaseTest.java
 │   │   │   └── ConfigReader.java
+│   │   │
 │   │   ├── listener/
 │   │   │   ├── ExtentListener.java
 │   │   │   ├── ExtentManager.java
 │   │   │   ├── RetryAnalyzer.java
-│   │   │   └── RetryListener.java
+│   │   │   ├── RetryListener.java
+│   │   │   ├── ArtifactReporter.java
+│   │   │   └── AllureReportListener.java
+│   │   │
 │   │   ├── pages/
-│   │   │   ├── CartPage.java
-│   │   │   ├── DashboardPage.java
 │   │   │   ├── LandingPage.java
 │   │   │   ├── LoginPage.java
+│   │   │   ├── DashboardPage.java
+│   │   │   ├── CartPage.java
 │   │   │   ├── ManageCoursesPage.java
 │   │   │   └── SignUpPage.java
+│   │   │
 │   │   └── utils/
-│   │       ├── AssertUtil.java
 │   │       ├── ExcelUtil.java
-│   │       └── TestDataProvider.java
+│   │       ├── TestDataProvider.java
+│   │       └── AssertUtil.java
+│   │
 │   └── test/
 │       ├── java/com/playwright/qa/test/
-│       │   ├── CartPageTest.java
-│       │   ├── DashboardPageTest.java
 │       │   ├── LandingPageTest.java
 │       │   ├── LoginTest.java
+│       │   ├── DashboardPageTest.java
+│       │   ├── CartPageTest.java
 │       │   ├── ManageCoursesTest.java
 │       │   └── NewUserSignUpTest.java
+│       │
 │       └── resources/
 │           ├── config.properties
-│           ├── testData.xlsx
 │           ├── smoke-suite.xml
 │           ├── regression-suite.xml
-│           ├── full-suite.xml
-│           ├── crossbrowser-testing.xml
-│           └── testng.xml
+│           ├── testng.xml
+│           └── testData.xlsx
+│
+├── test-output/
+├── target/
 └── pom.xml
 ```
 
-# ⚙️ Setup Instructions
+---
 
-## Clone Repository
+## Design Patterns
 
-bash
-git clone https://github.com/NPrad1/playwright-automation.git
-cd playwright-automation
-
-
-
-
-## Install Dependencies
-
-bash
-mvn clean install
-
-
-
-
-## Install Playwright Browsers
-
-bash
-playwright install
-
-
-
-
-# ▶️ Test Execution
-
-## Run Complete Test Suite
-
-bash
-mvn test
-
-
-
-
-## Run Smoke Suite
-
-bash
-mvn test -DsuiteXmlFile=src/test/resources/smoke-suite.xml
-
-
-
-
-## Run Regression Suite
-
-bash
-mvn test -DsuiteXmlFile=src/test/resources/regression-suite.xml
-
-
-
-
-## Run Full Suite
-
-bash
-mvn test -DsuiteXmlFile=src/test/resources/full-suite.xml
-
-
-
-
-## Run Cross Browser Suite
-
-bash
-mvn test -DsuiteXmlFile=src/test/resources/crossbrowser-testing.xml
-
-
-
-
-# 🌐 Cross Browser Testing
-
-Framework supports execution on:
-
-- Chromium
-- Firefox
-- WebKit
-
-Cross-browser execution is managed using TestNG suite XML configuration.
-
-
-
-# 🔄 Retry Mechanism
-
-Framework includes automatic retry handling for flaky test failures using:
-
-- RetryAnalyzer
-- RetryListener
-
-Failed tests are automatically re-executed based on retry configuration.
-
-
-
-# 📊 Reporting
-
-Framework generates:
-
-- Extent Reports
-- TestNG Reports
-- Screenshots on failure
-- Surefire reports
+| Pattern | Where Applied | Why |
+|---|---|---|
+| Page Object Model | `pages/` package | One change point per UI element; test logic stays clean |
+| ThreadLocal | `BaseTest.java` | Each parallel thread gets its own isolated browser instance |
+| Listener Pattern | `listener/` package | Reporting, retry, and artifact logic decoupled from tests |
+| Factory-style Browser Init | `BaseTest.java` | Single switch block handles all browser types cleanly |
+| Utility Reusability | `utils/` package | Shared Excel, assertion, and data logic — no duplication |
 
 ---
 
-## Extent Report Location
+## Key Implementation Highlights
 
-text
-test-output/ExtentReport.html
+### ThreadLocal — Safe Parallel Execution
 
+Each thread holds its own `Playwright`, `Browser`, `BrowserContext`, and `Page` — no shared state between parallel tests.
 
+```java
+private static final ThreadLocal<Page> pageThreadLocal = new ThreadLocal<>();
 
+public static Page getPage() {
+    return pageThreadLocal.get();
+}
+```
 
-## Surefire Report Location
+---
 
-text
-target/surefire-reports/
+### Retry Mechanism
 
+Failed tests retry up to **2 times** automatically.
 
+Applied globally via `IAnnotationTransformer` — no per-test annotation needed.
 
+```java
+public class RetryAnalyzer implements IRetryAnalyzer {
 
-# 📸 Screenshot Capture
+    private int count = 0;
+    private static final int MAX_RETRY = 2;
 
-Screenshots are automatically captured for failed test cases.
+    @Override
+    public boolean retry(ITestResult result) {
+        return count++ < MAX_RETRY;
+    }
+}
+```
 
-Example location:
+---
 
-text
-test-output/screenshots/
+### Parallel Suite Configuration
 
+```xml
+<suite name="Regression" parallel="classes" thread-count="3">
+```
 
+---
 
-# 📑 Data Driven Testing
+### Data-Driven Testing via Excel
 
-Framework supports Excel-based data-driven execution using:
+`ExcelUtil` reads test data sheets.
 
-- ExcelUtil.java
-- TestDataProvider.java
+`TestDataProvider` supplies rows to TestNG `@DataProvider`.
 
-Test data source:
+Each row executes as an independent test iteration.
 
-text
-src/test/resources/testData.xlsx
+---
 
+## Configuration
 
-
-# ⚡ Parallel Execution
-
-Framework supports parallel execution using TestNG XML configuration.
+```text
+src/test/resources/config.properties
+```
 
 Example:
 
-xml
-<suite name="Suite" parallel="tests" thread-count="3">
+```properties
+base.url=https://freelance-learn-automation.vercel.app
+browser.type=chromium
+headless=false
+timeout=10000
 
+user.email=admin@email.com
+user.password=admin@123
+user.unregemail=singh.j@gmail.com
+```
 
-# 🔔 Logging
+All environment-specific values are externalized here.
+
+Browser type and headless mode can also be overridden using Maven `-D` runtime parameters.
+
+---
+
+## Setup
+
+```bash
+git clone https://github.com/NPrad1/playwright-automation.git
+
+cd playwright-automation
+
+mvn clean install
+
+npx playwright install
+```
+
+---
+
+## Test Execution
+
+| Command | Description |
+|---|---|
+| `mvn clean test` | Run complete suite |
+| `mvn test -DsuiteFile=src/test/resources/smoke-suite.xml` | Run smoke suite |
+| `mvn test -DsuiteFile=src/test/resources/regression-suite.xml` | Run regression suite |
+| `mvn test -Dbrowser=firefox` | Run tests on Firefox |
+| `mvn test -Dheadless=true` | Run in headless mode |
+
+---
+
+## Reporting
+
+### Extent Report
+
+Single-file HTML report shareable without additional setup.
+
+```text
+test-output/ExtentReport.html
+```
+
+Contains:
+- execution summary
+- pass/fail status
+- screenshots
+- execution logs
+
+---
+
+### Allure Report
+
+Deep-debug report containing:
+- screenshots
+- videos
+- Playwright traces
+- step-level execution details
+
+Generate report:
+
+```bash
+allure serve target/allure-results
+```
+
+Both reports are generated from the same execution.
+
+- Extent Report → stakeholder-friendly summary
+- Allure Report → engineering/debugging analysis
+
+---
+
+## Playwright Artifacts
+
+| Artifact | Location |
+|---|---|
+| Failure videos | `test-output/videos/` |
+| Playwright traces | `test-output/traces/` |
+
+Open trace manually:
+
+```bash
+npx playwright show-trace test-output/traces/<test-name>.zip
+```
+
+---
+
+## CI/CD — GitHub Actions
+
+```yaml
+- name: Install Playwright browsers
+  run: npx playwright install --with-deps
+
+- name: Run smoke suite
+  run: mvn test -DsuiteFile=src/test/resources/smoke-suite.xml -Dheadless=true
+
+- name: Upload Extent Report
+  if: always()
+  uses: actions/upload-artifact@v3
+  with:
+    name: extent-report
+    path: test-output/ExtentReport.html
+
+- name: Upload failure traces
+  if: failure()
+  uses: actions/upload-artifact@v3
+  with:
+    name: failure-traces
+    path: test-output/traces/
+```
+
+Workflow file:
+
+```text
+.github/workflows/ci.yml
+```
+
+---
+
+## Logging
 
 Framework uses Log4j2 for centralized logging.
 
@@ -244,80 +316,46 @@ Configuration file:
 src/test/resources/log4j2.xml
 ```
 
----
+Logs capture:
+- browser initialization
+- navigation
+- actions
+- failures
 
-# 🔧 Configuration Management
-
-Framework supports configuration-driven execution using:
-text
-config.properties
-
-
-Example:
-
-properties
-browser=chromium
-headless=true
-baseUrl=https://freelance-learn-automation.vercel.app/login
-
+Logs are also appended to Extent Report entries through listeners.
 
 ---
 
-# 🧪 CI/CD Integration
+## Current Capabilities
 
-Framework is integrated with GitHub Actions for Continuous Integration.
-
-CI workflow file:
-
-text
-.github/workflows/ci.yml
-
-
-Features:
-- Automated test execution
-- Maven build validation
-- Browser setup
-- CI pipeline execution
-
-
-# 🧱 Design Patterns Used
-
-- Page Object Model (POM)
-- Utility-Based Reusability
-- Listener Pattern
-- Data Provider Pattern
-
-
-
-# 📈 Future Enhancements
-
-- REST Assured API integration
-- Docker support
-- Allure reporting
-- Database validation
-- Accessibility testing
-- Visual testing
-- Environment profiles
-- Cloud execution support
+- UI Automation
+- Cross Browser Testing
+- Parallel Execution
+- Retry Handling
+- Screenshot Capture
+- Video Recording
+- Playwright Tracing
+- Extent + Allure Reporting
+- CI/CD Execution
+- Excel Data Handling
 
 ---
 
+## Planned Improvements
 
-# 👨‍💻 Author
+- API Automation Integration
+- Docker-based Execution
+- Jenkins Pipeline Integration
+- Cloud Execution (BrowserStack / LambdaTest)
+- Database Validation
+- Accessibility Testing
+- Visual Regression Testing
+
+---
+
+## Author
 
 Pradeep Kumar
 
 GitHub:
 https://github.com/NPrad1
-
-
-# ⭐ Repository Goals
-
-This project is continuously evolving to simulate enterprise-level automation architecture with focus on:
-
-- Scalability
-- Maintainability
-- Stability
-- Reusability
-- CI/CD maturity
-- Framework engineering best practices

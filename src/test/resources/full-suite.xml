@@ -2,9 +2,31 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Full Suite" parallel="classes" thread-count="3" verbose="1">
 
-  <listeners>
-    <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
-  </listeners>
+ <listeners>
+
+        <!-- Allure TestNG Integration -->
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+
+        <!-- Auto generates and opens Allure report after execution -->
+        <listener class-name="com.playwright.qa.listener.AllureReportListener"/>
+
+        <!--
+            ArtifactReporter (IReporter) fires after ALL @AfterMethods complete.
+            Guarantees tracePath and videoPath are populated before
+            trace/video links are written to Extent Report.
+        -->
+        <listener class-name="com.playwright.qa.listener.ArtifactReporter"/>
+
+        <!--
+            ExtentListener handles pass/fail/skip logging in Extent Report.
+            Declared here AND in @Listeners on BaseTest - TestNG deduplicates.
+        -->
+        <listener class-name="com.playwright.qa.listener.ExtentListener"/>
+
+        <!-- RetryListener handles failed test retries -->
+        <listener class-name="com.playwright.qa.listener.RetryListener"/>
+
+    </listeners>
   <test name="All Tests">
     <classes>
       <class name="com.playwright.qa.test.NewUserSignUpTest"/>

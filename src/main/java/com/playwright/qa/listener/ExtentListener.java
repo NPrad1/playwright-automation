@@ -1,10 +1,9 @@
-
 package com.playwright.qa.listener;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
@@ -15,81 +14,142 @@ import com.playwright.qa.base.BaseTest;
 
 public class ExtentListener implements ITestListener {
 
-	 private static final ExtentReports extent = ExtentManager.getInstance();
+    private static final ExtentReports extent =
+            ExtentManager.getInstance();
 
-	    // ✅ ThreadLocal — each parallel thread owns its own ExtentTest node
-	    private static final ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+    // =========================================================
+    // THREAD SAFE EXTENT TEST
+    // =========================================================
 
-	    @Override
-	    public void onTestStart(ITestResult result) {
-	        int retryCount = result.getMethod().getCurrentInvocationCount();
-	        ExtentTest extentTest = extent.createTest(
-	                result.getMethod().getMethodName() + " (Attempt: " + retryCount + ")"
-	        );
-	        test.set(extentTest);
-	    }
+    private static final ThreadLocal<ExtentTest> test =
+            new ThreadLocal<>();
 
-	    @Override
-	    public void onTestSuccess(ITestResult result) {
-	        test.get().pass("✅ Test Passed");
-	    }
+    @Override
+    public void onTestStart(ITestResult result) {
 
-	    @Override
-	    public void onTestFailure(ITestResult result) {
-	        int retryCount = result.getMethod().getCurrentInvocationCount();
-	        test.get().fail("❌ Test Failed on Attempt: " + retryCount);
-	        test.get().fail(result.getThrowable());
+        int retryCount =
+                result.getMethod().getCurrentInvocationCount();
 
-	        // ── Screenshot (captured live — page still open here) ─────────────────
-	        try {
-	            Page page = BaseTest.getPage();
-	            if (page != null && !page.isClosed()) {
-	                String screenshotDir = System.getProperty("user.dir") + "/test-output/screenshots/";
-	                Files.createDirectories(Paths.get(screenshotDir));
+        ExtentTest extentTest =
+                extent.createTest(
+                        result.getMethod().getMethodName()
+                                + " (Attempt: "
+                                + retryCount
+                                + ")"
+                );
 
-	                String fileName = result.getMethod().getMethodName()
-	                        + "_retry_" + retryCount + ".png";
-	                String filePath = screenshotDir + fileName;
+        test.set(extentTest);
+    }
 
-	                page.screenshot(new Page.ScreenshotOptions()
-	                        .setPath(Paths.get(filePath))
-	                        .setFullPage(true));
+    @Override
+    public void onTestSuccess(ITestResult result) {
 
-	                test.get().addScreenCaptureFromPath(
-	                        "screenshots/" + fileName,
-	                        "📸 Failure Screenshot"
-	                );
-	            } else {
-	                test.get().info("Page already closed — screenshot skipped");
-	            }
-	        } catch (Exception e) {
-	            test.get().warning("Screenshot failed: " + e.getMessage());
-	        }
+        test.get().pass("✅ Test Passed");
+    }
 
-	        // ── Trace & Video links ────────────────────────────────────────────────
-	        // NOTE: These attributes are set in BaseTest.tearDown() which runs AFTER
-	        //       this listener. They will be null here. Links are attached in
-	        //       ArtifactReporter.generateReport() which runs after all tests.
-	        // This block is intentionally left as a no-op — see ArtifactReporter.java
-	    }
+    @Override
+    public void onTestFailure(ITestResult result) {
 
-	    @Override
-	    public void onTestSkipped(ITestResult result) {
-	        test.get().skip("⚠️ Test Skipped");
-	    }
+        int retryCount =
+                result.getMethod().getCurrentInvocationCount();
 
-	    @Override
-	    public void onFinish(ITestContext context) {
-	        extent.flush();
-	    }
+        test.get().fail(
+                "❌ Test Failed on Attempt: "
+                        + retryCount
+        );
 
-	    // ✅ Package-private getter so ArtifactReporter can update the same node
-	    static ThreadLocal<ExtentTest> getTestThreadLocal() {
-	        return test;
-	    }
+        test.get().fail(result.getThrowable());
 
-	    static ExtentReports getExtent() {
-	        return extent;
-	    }
+        try {
 
+            Page page = BaseTest.getPage();
+
+            if (page != null && !page.isClosed()) {
+
+                // =====================================================
+                // TAKE SCREENSHOT
+                // =====================================================
+
+                byte[] screenshotBytes =
+                        page.screenshot(
+                                new Page.ScreenshotOptions()
+                                        .setFullPage(true)
+                        );
+
+                // =====================================================
+                // SAVE SCREENSHOT
+                // =====================================================
+
+                String screenshotDir =
+                        System.getProperty("user.dir")
+                                + "/test-output/screenshots/";
+
+                Files.createDirectories(
+                        Paths.get(screenshotDir)
+                );
+
+                String fileName =
+                        result.getMethod().getMethodName()
+                                + "_retry_"
+                                + retryCount
+                                + ".png";
+
+                Path screenshotPath =
+                        Paths.get(screenshotDir, fileName);
+
+                Files.write(
+                        screenshotPath,
+                        screenshotBytes
+                );
+
+                // =====================================================
+                // EXTENT REPORT ATTACHMENT
+                // =====================================================
+
+                test.get().addScreenCaptureFromPath(
+                        screenshotPath.toString(),
+                        "📸 Failure Screenshot"
+                );
+
+            } else {
+
+                test.get().info(
+                        "Page already closed - screenshot skipped"
+                );
+            }
+
+        } catch (Exception e) {
+
+            test.get().warning(
+                    "Screenshot capture failed: "
+                            + e.getMessage()
+            );
+        }
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+
+        test.get().skip("⚠️ Test Skipped");
+    }
+
+    @Override
+    public void onFinish(org.testng.ITestContext context) {
+
+        extent.flush();
+    }
+
+    // =========================================================
+    // GETTERS
+    // =========================================================
+
+    static ThreadLocal<ExtentTest> getTestThreadLocal() {
+
+        return test;
+    }
+
+    static ExtentReports getExtent() {
+
+        return extent;
+    }
 }

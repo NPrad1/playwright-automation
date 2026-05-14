@@ -1,11 +1,13 @@
 package com.playwright.qa.base;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import io.qameta.allure.Allure;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestResult;
@@ -241,6 +243,8 @@ public class BaseTest {
                         + "_t"
                         + Thread.currentThread().getId();
 
+        result.setAttribute("testName", testName);
+
         // =====================================================
         // TRACE PATH
         // =====================================================
@@ -278,11 +282,16 @@ public class BaseTest {
 
             if (context != null) {
 
-                Files.createDirectories(tracePath.getParent());
+                Files.createDirectories(
+                        tracePath.getParent()
+                );
 
                 if (!result.isSuccess()) {
 
-                    logger.error("FAILED TEST: {}", result.getName());
+                    logger.error(
+                            "FAILED TEST: {}",
+                            result.getName()
+                    );
 
                     if (result.getThrowable() != null) {
 
@@ -304,6 +313,25 @@ public class BaseTest {
                             tracePath.toAbsolutePath()
                     );
 
+                    // =====================================================
+                    // ALLURE TRACE ATTACHMENT
+                    // =====================================================
+
+                    if (Files.exists(tracePath)) {
+
+                        Allure.addAttachment(
+                                "Trace Zip",
+                                "application/zip",
+                                Files.newInputStream(tracePath),
+                                ".zip"
+                        );
+
+                        logger.info(
+                                "Allure trace attached for: {}",
+                                testName
+                        );
+                    }
+
                     result.setAttribute(
                             "tracePath",
                             tracePath.toAbsolutePath().toString()
@@ -323,6 +351,45 @@ public class BaseTest {
         } catch (Exception e) {
 
             logger.warn("Tracing stop failed", e);
+        }
+
+        // =====================================================
+        // ALLURE SCREENSHOT ATTACHMENT
+        // =====================================================
+
+        try {
+
+            if (!result.isSuccess()
+                    && page != null
+                    && !page.isClosed()) {
+
+                byte[] screenshot =
+                        page.screenshot(
+
+                                new Page.ScreenshotOptions()
+                                        .setFullPage(true)
+
+                        );
+
+                Allure.addAttachment(
+                        "📸 Failure Screenshot",
+                        "image/png",
+                        new ByteArrayInputStream(screenshot),
+                        ".png"
+                );
+
+                logger.info(
+                        "Allure screenshot attached for: {}",
+                        testName
+                );
+            }
+
+        } catch (Exception e) {
+
+            logger.warn(
+                    "Allure screenshot attachment failed",
+                    e
+            );
         }
 
         // =====================================================
@@ -363,7 +430,7 @@ public class BaseTest {
 
         try {
 
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
         } catch (InterruptedException e) {
 
@@ -374,13 +441,15 @@ public class BaseTest {
         // VIDEO HANDLING
         // =====================================================
 
+        Path finalVideoPath = null;
+
         try {
 
             if (videoPath != null) {
 
                 if (!result.isSuccess()) {
 
-                    Path finalVideoPath = Paths.get(
+                    finalVideoPath = Paths.get(
                             System.getProperty("user.dir")
                                     + "/test-output/videos/"
                                     + testName
@@ -421,6 +490,39 @@ public class BaseTest {
         } catch (Exception e) {
 
             logger.warn("Video handling failed", e);
+        }
+
+        // =====================================================
+        // ALLURE VIDEO ATTACHMENT
+        // =====================================================
+
+        try {
+
+            if (!result.isSuccess()
+                    && finalVideoPath != null
+                    && Files.exists(finalVideoPath)) {
+
+                Allure.addAttachment(
+                        "🎥 Failure Video - " + testName,
+                        "video/webm",
+                        new ByteArrayInputStream(
+                                Files.readAllBytes(finalVideoPath)
+                        ),
+                        "webm"
+                );
+
+                logger.info(
+                        "Allure video attached for: {}",
+                        testName
+                );
+            }
+
+        } catch (Exception e) {
+
+            logger.warn(
+                    "Allure video attachment failed",
+                    e
+            );
         }
 
         // =====================================================

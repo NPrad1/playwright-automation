@@ -40,6 +40,8 @@ public class LoginTest extends BaseTest {
 		LoginPage loginPage = landingPage.clickloginButton();
 		// 🔥 ensure navigation completed
 		page().waitForURL("**/login");
+		
+
 
 		Assert.assertTrue(loginPage.loginPageURL().contains("/login"), "Login page URL no matching");
 
