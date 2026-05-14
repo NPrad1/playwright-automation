@@ -1,26 +1,26 @@
-name: Playwright Test Execution
+name: Playwright Automation Tests
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs:
-test:
-runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - name: Checkout Code
-    uses: actions/checkout@v3
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-  - name: Set up Java
-    uses: actions/setup-java@v3
-    with:
-      distribution: temurin
-      java-version: 17
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'
 
-  - name: Run Tests
-    working-directory: playwright-learn-automation
-    run: mvn clean test
-```
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Tests
+        run: mvn clean test
