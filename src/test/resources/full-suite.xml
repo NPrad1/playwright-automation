@@ -13,7 +13,7 @@
         <!--
             ArtifactReporter (IReporter) fires after ALL @AfterMethods complete.
             Guarantees tracePath and videoPath are populated before
-            trace/video links are written to Extent Report.
+            trace/video links are written to Extent Report
         -->
         <listener class-name="com.playwright.qa.listener.ArtifactReporter"/>
 

@@ -19,8 +19,8 @@ public class NewUserSignUpTest extends BaseTest {
 
 	@BeforeMethod(groups = {"smoke", "regression"}, alwaysRun = true)
 	public void setUpnewUserSignUpPage() {
-		landingPage = new LandingPage(page());
-		signUpPage = landingPage.clickloginButton().newUserSignUp();
+		landingPage = new LandingPage(getPage());
+		signUpPage = landingPage.clickLoginButton().newUserSignUp();
 	}
 
 	// ✅ Verify SignUp Page opens
@@ -64,7 +64,7 @@ public class NewUserSignUpTest extends BaseTest {
 		signUpPage.enterUserDetails(name, uniqueEmail, password, state, hobbies);
 		signUpPage.clickSignUp();
 		
-		LoginPage loginPage=new LoginPage(page());
+		LoginPage loginPage=new LoginPage(getPage());
 		DashboardPage dashboardPage = loginPage.loginToApplication(uniqueEmail, password);
 		Assert.assertTrue(dashboardPage.isLoginSuccessful(), "Expected user to be logged in, but login failed");
 		

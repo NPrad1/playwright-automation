@@ -23,13 +23,13 @@ public class CartPageTest extends BaseTest{
 	
 	
 	
-	@BeforeMethod(groups = {"smoke", "regression"}, alwaysRun = true)
+	@BeforeMethod( alwaysRun = true)
 	public void setUpCartPage() {
-		landingPage = new LandingPage(page());
+		landingPage = new LandingPage(getPage());
 		String email = ConfigReader.get("user.email");
 		String password = ConfigReader.get("user.password");
 
-		loginPage = landingPage.clickloginButton();
+		loginPage = landingPage.clickLoginButton();
 		dashboardPage = loginPage.loginToApplication(email, password);
 	}
 	
@@ -199,7 +199,7 @@ public class CartPageTest extends BaseTest{
 
 	        dashboardPage.addCourseToCart(courseName);
 
-	        // small wait for stabilit
+	        // small wait for stability
 	     //   page.waitForTimeout(500);
 
 	        expectedTotal += price;

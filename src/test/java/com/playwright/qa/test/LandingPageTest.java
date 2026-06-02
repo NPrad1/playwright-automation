@@ -13,7 +13,7 @@ public class LandingPageTest extends BaseTest {
 	
 	@BeforeMethod(groups = {"smoke", "regression"}, alwaysRun = true)
 	public void setUpLandingpage() {
-		landingPage = new LandingPage(page());
+		landingPage = new LandingPage(getPage());
 	}
 
 	@Test(groups = "smoke")

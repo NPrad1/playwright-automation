@@ -23,11 +23,11 @@ public class ManageCoursesTest extends BaseTest {
 
 	@BeforeMethod(groups = {"smoke", "regression"}, alwaysRun = true)
 	public void setUpDashboardPage() {
-		landingPage = new LandingPage(page());
+		landingPage = new LandingPage(getPage());
 		String email = ConfigReader.get("user.email");
 		String password = ConfigReader.get("user.password");
 
-		loginPage = landingPage.clickloginButton();
+		loginPage = landingPage.clickLoginButton();
 		dashboardPage = loginPage.loginToApplication(email, password);
 		manageCoursesPage = dashboardPage.manageCourses();
 

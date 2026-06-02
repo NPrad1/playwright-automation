@@ -1,35 +1,25 @@
 package com.playwright.qa.base;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
+import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.ViewportSize;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import io.qameta.allure.Allure;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.BrowserType;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Tracing;
-import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.ViewportSize;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Listeners({
         com.playwright.qa.listener.ExtentListener.class,
-        com.playwright.qa.listener.RetryListener.class
+        com.playwright.qa.listener.RetryListener.class,com.playwright.qa.listener.ArtifactReporter.class,com.playwright.qa.listener.AllureReportListener.class,com.playwright.qa.listener.ExecutionTimeListener.class,io.qameta.allure.testng.AllureTestNg.class
 })
 public class BaseTest {
 
@@ -37,7 +27,7 @@ public class BaseTest {
             LogManager.getLogger(BaseTest.class);
 
     // =========================================================
-    // THREAD SAFE OBJECTS
+    // THREAD LOCAL OBJECTS
     // =========================================================
 
     private static final ThreadLocal<Playwright> tlPlaywright =
@@ -52,6 +42,18 @@ public class BaseTest {
     private static final ThreadLocal<Page> tlPage =
             new ThreadLocal<>();
 
+    private static final ThreadLocal<String> tlBrowserName =
+            new ThreadLocal<>();
+
+    // =========================================================
+    // VIDEO EXECUTOR
+    // =========================================================
+
+    private static final ExecutorService videoExecutor =
+            Executors.newFixedThreadPool(
+                    Runtime.getRuntime().availableProcessors()
+            );
+
     // =========================================================
     // CONFIG
     // =========================================================
@@ -61,18 +63,6 @@ public class BaseTest {
 
     private static final int TIMEOUT =
             ConfigReader.getInt("timeout");
-
-    private static final boolean HEADLESS =
-            Boolean.parseBoolean(
-                    System.getProperty(
-                            "headless",
-                            System.getenv()
-                                    .getOrDefault("CI", "false")
-                                    .equals("true")
-                                            ? "true"
-                                            : ConfigReader.get("headless")
-                    )
-            );
 
     // =========================================================
     // GETTERS
@@ -99,11 +89,11 @@ public class BaseTest {
     }
 
     // =========================================================
-    // SUITE SETUP
+    // BEFORE SUITE
     // =========================================================
 
     @BeforeSuite(alwaysRun = true)
-    public static void globalSetup() {
+    public void beforeSuite() {
 
         System.setProperty(
                 "allure.results.directory",
@@ -111,143 +101,394 @@ public class BaseTest {
                         + "/target/allure-results"
         );
 
-        logger.info("Allure Results Directory Configured");
+        logger.info("=================================================");
+        logger.info("Execution Started");
+        logger.info("=================================================");
     }
 
     // =========================================================
-    // TEST SETUP
+    // FIX 1: @BeforeClass -> @BeforeTest
+    // ONE BROWSER INSTANCE PER <test> BLOCK, NOT PER CLASS
+    // =========================================================
+
+    @BeforeTest(alwaysRun = true)
+    @Parameters("browser")
+    public void initBrowser(
+            @Optional("chromium") String browserName) {
+
+        if (browserName != null && !browserName.isBlank()) {
+            tlBrowserName.set(browserName);
+        }
+
+        String resolvedBrowser = tlBrowserName.get();
+
+        if (resolvedBrowser == null || resolvedBrowser.isBlank()) {
+            resolvedBrowser = "chromium";
+            tlBrowserName.set(resolvedBrowser);
+            logger.warn(
+                    "Thread {} browserName was null, defaulting to chromium",
+                    Thread.currentThread().getId()
+            );
+        }
+
+        logger.info(
+                "Thread {} initializing browser: {}",
+                Thread.currentThread().getId(),
+                resolvedBrowser
+        );
+
+        try {
+
+            Playwright playwright = Playwright.create();
+            tlPlaywright.set(playwright);
+
+            Browser browser = launchBrowser(playwright, resolvedBrowser);
+
+            if (browser == null) {
+                throw new RuntimeException("Browser launch returned null");
+            }
+
+            tlBrowser.set(browser);
+
+            logger.info(
+                    "Thread {} browser initialized successfully",
+                    Thread.currentThread().getId()
+            );
+
+        } catch (Exception e) {
+            logger.error("Browser initialization failed", e);
+            throw e;
+        }
+    }
+
+    // =========================================================
+    // BEFORE METHOD
+    // NEW CONTEXT + NEW PAGE PER TEST
     // =========================================================
 
     @BeforeMethod(alwaysRun = true)
-    @Parameters("browser")
-    public void setUp(@Optional("chromium") String browserName) {
+    public void setUp() {
+
+        String browserName = tlBrowserName.get();
+
+        if (browserName == null || browserName.isBlank()) {
+            browserName = "chromium";
+            tlBrowserName.set(browserName);
+            logger.warn(
+                    "Thread {} browserName was null in setUp, defaulting to chromium",
+                    Thread.currentThread().getId()
+            );
+        }
 
         logger.info(
-                "Thread {} running on browser: {}",
+                "Thread {} running test on browser: {}",
                 Thread.currentThread().getId(),
                 browserName
         );
 
-        logger.info("HEADLESS MODE: {}", HEADLESS);
-
-        // =====================================================
-        // PLAYWRIGHT
-        // =====================================================
-
-        Playwright playwright = Playwright.create();
-        tlPlaywright.set(playwright);
-
-        // =====================================================
-        // BROWSER
-        // =====================================================
-
-        BrowserType.LaunchOptions options =
-                new BrowserType.LaunchOptions()
-                        .setHeadless(HEADLESS);
-
-        Browser browser = switch (browserName.toLowerCase()) {
-
-            case "firefox" ->
-                    playwright.firefox().launch(options);
-
-            case "webkit" ->
-                    playwright.webkit().launch(options);
-
-            default ->
-                    playwright.chromium().launch(options);
-        };
-
-        tlBrowser.set(browser);
-
-        // =====================================================
-        // VIDEO DIRECTORY
-        // =====================================================
-
-        String videoDir =
-                System.getProperty("user.dir")
-                        + "/test-output/videos/thread-"
-                        + Thread.currentThread().getId();
-
         try {
 
-            Files.createDirectories(Paths.get(videoDir));
+            Browser browser = getBrowser();
 
-        } catch (IOException e) {
-
-            logger.warn("Unable to create video directory", e);
-        }
-
-        // =====================================================
-        // CONTEXT
-        // =====================================================
-
-        BrowserContext context =
-                browser.newContext(
-
-                        new Browser.NewContextOptions()
-                                .setViewportSize(
-                                        new ViewportSize(1440, 900)
-                                )
-                                .setRecordVideoDir(Paths.get(videoDir))
-                                .setRecordVideoSize(1440, 900)
-
+            if (browser == null || !browser.isConnected()) {
+                logger.warn(
+                        "Thread {} browser null or disconnected. Reinitializing...",
+                        Thread.currentThread().getId()
                 );
+                Playwright playwright = Playwright.create();
+                tlPlaywright.set(playwright);
+                browser = launchBrowser(playwright, tlBrowserName.get());
+                tlBrowser.set(browser);
+            }
 
-        tlContext.set(context);
+            BrowserContext context =
+                    browser.newContext(buildContextOptions());
+            tlContext.set(context);
 
-        // =====================================================
-        // TRACING
-        // =====================================================
+            startTracing(context);
 
-        context.tracing().start(
+            Page page = context.newPage();
+            tlPage.set(page);
 
-                new Tracing.StartOptions()
-                        .setScreenshots(true)
-                        .setSnapshots(true)
-                        .setSources(true)
+            boolean isWebKit =
+                    "webkit".equalsIgnoreCase(browserName);
 
-        );
+            page.setDefaultTimeout(
+                    isWebKit ? TIMEOUT * 2 : TIMEOUT
+            );
+            page.setDefaultNavigationTimeout(
+                    isWebKit ? 60000 : 30000
+            );
 
-        // =====================================================
-        // PAGE
-        // =====================================================
+            page.navigate(BASE_URL);
+            page.waitForLoadState(LoadState.DOMCONTENTLOADED);
 
-        Page page = context.newPage();
-
-        tlPage.set(page);
-
-        page.setDefaultTimeout(TIMEOUT);
-        page.setDefaultNavigationTimeout(30000);
-
-        page.navigate(BASE_URL);
-
-        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+        } catch (Exception e) {
+            // FIX 2: Clean up partial state on setUp failure
+            logger.error("Thread {} setUp failed",
+                    Thread.currentThread().getId(), e);
+            try {
+                Playwright pw = tlPlaywright.get();
+                if (pw != null) pw.close();
+            } catch (Exception ignored) {}
+            tlPlaywright.remove();
+            tlBrowser.remove();
+            tlPage.remove();
+            tlContext.remove();
+            throw e;
+        }
     }
 
     // =========================================================
-    // TEARDOWN
+    // AFTER METHOD
     // =========================================================
 
     @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
 
-        BrowserContext context = getContext();
-        Page page = getPage();
-        Browser browser = getBrowser();
-        Playwright playwright = getPlaywright();
+        // FIX 3: Replaced broken isBeforeMethodConfiguration()
+        // check with a null check that actually works
+        if (tlPage.get() == null && tlContext.get() == null) {
+            logger.warn(
+                    "Thread {} page/context null, setUp likely failed for: {}",
+                    Thread.currentThread().getId(),
+                    result.getMethod().getMethodName()
+            );
+            tlPage.remove();
+            tlContext.remove();
+            return;
+        }
 
-        String testName =
+        String testName = buildTestName(result);
+        result.setAttribute("testName", testName);
+
+        Path videoPath = captureVideoPath();
+
+        try {
+            handleTracing(result, testName);
+            handleScreenshot(result);
+        } catch (Exception e) {
+            logger.warn("Artifact capture failed", e);
+        }
+
+        try {
+            closePage();
+        } catch (Exception e) {
+            logger.warn("Page close failed", e);
+        }
+
+        try {
+            closeContext();
+        } catch (Exception e) {
+            logger.warn("Context close failed", e);
+        }
+
+        submitVideoHandling(result, testName, videoPath);
+
+        tlPage.remove();
+        tlContext.remove();
+    }
+
+    // =========================================================
+    // FIX 1: @AfterClass -> @AfterTest
+    // CLOSES BROWSER ONCE PER <test> BLOCK
+    // tlBrowserName cleaned here instead of @AfterSuite
+    // =========================================================
+
+    @AfterTest(alwaysRun = true)
+    public void closeBrowser() {
+
+        try {
+            Browser browser = getBrowser();
+            if (browser != null) {
+                browser.close();
+                logger.info(
+                        "Thread {} browser closed",
+                        Thread.currentThread().getId()
+                );
+            }
+        } catch (Exception e) {
+            logger.warn("Browser close failed", e);
+        }
+
+        try {
+            Playwright playwright = getPlaywright();
+            if (playwright != null) {
+                playwright.close();
+                logger.info(
+                        "Thread {} playwright closed",
+                        Thread.currentThread().getId()
+                );
+            }
+        } catch (Exception e) {
+            logger.warn("Playwright close failed", e);
+        }
+
+        tlBrowser.remove();
+        tlPlaywright.remove();
+        tlBrowserName.remove();
+    }
+
+    // =========================================================
+    // AFTER SUITE
+    // =========================================================
+
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite() {
+
+        waitForVideoExecutor();
+
+        // tlBrowserName.remove() moved to @AfterTest
+
+        logger.info("=================================================");
+        logger.info("Execution Completed");
+        logger.info("=================================================");
+    }
+
+    // =========================================================
+    // FIX 4: HOVER AND CLICK HELPER
+    // Use for any nav hover -> click patterns
+    // =========================================================
+
+    protected void hoverAndClick(String hoverLocator, String clickLocator) {
+        page().locator(hoverLocator).waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(15_000));
+        page().locator(hoverLocator).hover();
+        page().locator(clickLocator).waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(10_000));
+        page().locator(clickLocator).click();
+    }
+
+    // =========================================================
+    // LAUNCH BROWSER
+    // =========================================================
+
+    private Browser launchBrowser(
+            Playwright playwright,
+            String browserName) {
+
+        if (browserName == null || browserName.isBlank()) {
+            logger.warn(
+                    "launchBrowser received null browserName, defaulting to chromium"
+            );
+            browserName = "chromium";
+        }
+
+        BrowserType.LaunchOptions options =
+                new BrowserType.LaunchOptions()
+                        .setHeadless(ArtifactConfig.HEADLESS);
+
+        if ("webkit".equalsIgnoreCase(browserName)) {
+            options.setSlowMo(100);
+        }
+
+        return switch (browserName.toLowerCase()) {
+            case "firefox" -> playwright.firefox().launch(options);
+            case "webkit"  -> playwright.webkit().launch(options);
+            default        -> playwright.chromium().launch(options);
+        };
+    }
+
+    // =========================================================
+    // CONTEXT OPTIONS
+    // =========================================================
+
+    private Browser.NewContextOptions buildContextOptions() {
+
+        Browser.NewContextOptions options =
+                new Browser.NewContextOptions()
+                        .setViewportSize(new ViewportSize(1920, 1080));
+
+        if (ArtifactConfig.RECORD_VIDEO) {
+
+            String videoDir =
+                    System.getProperty("user.dir")
+                            + "/test-output/videos/thread-"
+                            + Thread.currentThread().getId();
+
+            try {
+                Files.createDirectories(Paths.get(videoDir));
+            } catch (IOException e) {
+                logger.warn("Unable to create video directory", e);
+            }
+
+            options.setRecordVideoDir(Paths.get(videoDir))
+                   .setRecordVideoSize(1440, 900);
+        }
+
+        return options;
+    }
+
+    // =========================================================
+    // START TRACING
+    // =========================================================
+
+    private void startTracing(BrowserContext context) {
+
+        boolean fullTrace = ArtifactConfig.TRACE_FIRST_RUN;
+
+        context.tracing().start(
+                new Tracing.StartOptions()
+                        .setScreenshots(fullTrace)
+                        .setSnapshots(fullTrace)
+                        .setSources(false)
+        );
+    }
+
+    // =========================================================
+    // BUILD TEST NAME
+    // =========================================================
+
+    private String buildTestName(ITestResult result) {
+
+        int invocationCount =
+                result.getMethod().getCurrentInvocationCount();
+
+        String base =
                 result.getMethod().getMethodName()
-                        + "_retry"
-                        + result.getMethod().getCurrentInvocationCount()
                         + "_t"
                         + Thread.currentThread().getId();
 
-        result.setAttribute("testName", testName);
+        return invocationCount > 1
+                ? base + "_retry" + (invocationCount - 1)
+                : base;
+    }
 
-        // =====================================================
-        // TRACE PATH
-        // =====================================================
+    // =========================================================
+    // CAPTURE VIDEO PATH
+    // =========================================================
+
+    private Path captureVideoPath() {
+
+        try {
+            Page page = getPage();
+            if (page != null && page.video() != null) {
+                return page.video().path();
+            }
+        } catch (Exception e) {
+            logger.warn("Unable to capture video path", e);
+        }
+
+        return null;
+    }
+
+    // =========================================================
+    // HANDLE TRACING
+    // =========================================================
+
+    private void handleTracing(
+            ITestResult result,
+            String testName) {
+
+        BrowserContext context = getContext();
+
+        if (context == null) {
+            return;
+        }
 
         Path tracePath = Paths.get(
                 System.getProperty("user.dir")
@@ -256,314 +497,222 @@ public class BaseTest {
                         + "/trace.zip"
         );
 
-        // =====================================================
-        // VIDEO PATH
-        // =====================================================
-
-        Path videoPath = null;
-
         try {
 
-            if (page != null && page.video() != null) {
+            Files.createDirectories(tracePath.getParent());
 
-                videoPath = page.video().path();
-            }
+            if (!result.isSuccess()) {
 
-        } catch (Exception e) {
+                logger.error("FAILED TEST: {}", result.getName());
 
-            logger.warn("Unable to capture video path", e);
-        }
-
-        // =====================================================
-        // TRACE STOP
-        // =====================================================
-
-        try {
-
-            if (context != null) {
-
-                Files.createDirectories(
-                        tracePath.getParent()
+                context.tracing().stop(
+                        new Tracing.StopOptions().setPath(tracePath)
                 );
 
-                if (!result.isSuccess()) {
-
-                    logger.error(
-                            "FAILED TEST: {}",
-                            result.getName()
-                    );
-
-                    if (result.getThrowable() != null) {
-
-                        logger.error(
-                                "ERROR:",
-                                result.getThrowable()
-                        );
-                    }
-
-                    context.tracing().stop(
-
-                            new Tracing.StopOptions()
-                                    .setPath(tracePath)
-
-                    );
-
-                    logger.info(
-                            "Trace saved: {}",
-                            tracePath.toAbsolutePath()
-                    );
-
-                    // =====================================================
-                    // ALLURE TRACE ATTACHMENT
-                    // =====================================================
-
-                    if (Files.exists(tracePath)) {
-
-                        Allure.addAttachment(
-                                "Trace Zip",
-                                "application/zip",
-                                Files.newInputStream(tracePath),
-                                ".zip"
-                        );
-
-                        logger.info(
-                                "Allure trace attached for: {}",
-                                testName
-                        );
-                    }
-
-                    result.setAttribute(
-                            "tracePath",
-                            tracePath.toAbsolutePath().toString()
-                    );
-
-                } else {
-
-                    context.tracing().stop();
-
-                    logger.info(
-                            "PASSED TEST: {} - Trace discarded",
-                            result.getName()
+                if (Files.exists(tracePath)) {
+                    Allure.addAttachment(
+                            "Trace Zip",
+                            "application/zip",
+                            Files.newInputStream(tracePath),
+                            ".zip"
                     );
                 }
+
+            } else {
+                context.tracing().stop();
             }
 
         } catch (Exception e) {
-
             logger.warn("Tracing stop failed", e);
         }
+    }
 
-        // =====================================================
-        // ALLURE SCREENSHOT ATTACHMENT
-        // =====================================================
+    // =========================================================
+    // HANDLE SCREENSHOT
+    // =========================================================
+
+    private void handleScreenshot(ITestResult result) {
+
+        Page page = getPage();
+
+        if (result.isSuccess()
+                || page == null
+                || page.isClosed()) {
+            return;
+        }
 
         try {
 
-            if (!result.isSuccess()
-                    && page != null
-                    && !page.isClosed()) {
-
-                byte[] screenshot =
-                        page.screenshot(
-
-                                new Page.ScreenshotOptions()
-                                        .setFullPage(true)
-
-                        );
-
-                Allure.addAttachment(
-                        "📸 Failure Screenshot",
-                        "image/png",
-                        new ByteArrayInputStream(screenshot),
-                        ".png"
-                );
-
-                logger.info(
-                        "Allure screenshot attached for: {}",
-                        testName
-                );
-            }
-
-        } catch (Exception e) {
-
-            logger.warn(
-                    "Allure screenshot attachment failed",
-                    e
+            byte[] screenshot = page.screenshot(
+                    new Page.ScreenshotOptions().setFullPage(true)
             );
-        }
 
-        // =====================================================
-        // PAGE CLOSE
-        // =====================================================
-
-        try {
-
-            if (page != null && !page.isClosed()) {
-
-                page.close();
-            }
+            Allure.addAttachment(
+                    "Failure Screenshot",
+                    "image/png",
+                    new ByteArrayInputStream(screenshot),
+                    ".png"
+            );
 
         } catch (Exception e) {
+            logger.warn("Screenshot attachment failed", e);
+        }
+    }
 
-            logger.warn("Page close failed", e);
+    // =========================================================
+    // CLOSE PAGE
+    // =========================================================
+
+    private void closePage() {
+
+        Page page = getPage();
+
+        if (page != null && !page.isClosed()) {
+            page.close();
+        }
+    }
+
+    // =========================================================
+    // CLOSE CONTEXT
+    // =========================================================
+
+    private void closeContext() {
+
+        BrowserContext context = getContext();
+
+        if (context != null) {
+            context.close();
+        }
+    }
+
+    // =========================================================
+    // SUBMIT VIDEO HANDLING
+    // =========================================================
+
+    private void submitVideoHandling(
+            ITestResult result,
+            String testName,
+            Path videoPath) {
+
+        if (!ArtifactConfig.RECORD_VIDEO || videoPath == null) {
+            return;
         }
 
-        // =====================================================
-        // CONTEXT CLOSE
-        // =====================================================
+        if (videoExecutor.isShutdown()) {
+            logger.warn("Video executor already shut down");
+            return;
+        }
 
-        try {
+        final boolean isFailed = !result.isSuccess();
 
-            if (context != null) {
+        videoExecutor.submit(() -> {
 
-                context.close();
+            if (!waitForVideoFile(videoPath)) {
+                logger.warn("Video file not found: {}", videoPath);
+                return;
             }
 
-        } catch (Exception e) {
+            try {
 
-            logger.warn("Context close failed", e);
-        }
+                if (isFailed) {
 
-        // =====================================================
-        // WAIT FOR VIDEO RELEASE
-        // =====================================================
-
-        try {
-
-            Thread.sleep(1000);
-
-        } catch (InterruptedException e) {
-
-            Thread.currentThread().interrupt();
-        }
-
-        // =====================================================
-        // VIDEO HANDLING
-        // =====================================================
-
-        Path finalVideoPath = null;
-
-        try {
-
-            if (videoPath != null) {
-
-                if (!result.isSuccess()) {
-
-                    finalVideoPath = Paths.get(
+                    Path destination = Paths.get(
                             System.getProperty("user.dir")
                                     + "/test-output/videos/"
                                     + testName
                                     + ".webm"
                     );
 
-                    Files.createDirectories(
-                            finalVideoPath.getParent()
-                    );
+                    Files.createDirectories(destination.getParent());
 
                     Files.move(
                             videoPath,
-                            finalVideoPath,
+                            destination,
                             StandardCopyOption.REPLACE_EXISTING
                     );
 
-                    logger.info(
-                            "Video saved: {}",
-                            finalVideoPath.toAbsolutePath()
+                    Allure.addAttachment(
+                            "Failure Video",
+                            "video/webm",
+                            new ByteArrayInputStream(
+                                    Files.readAllBytes(destination)
+                            ),
+                            ".webm"
                     );
 
-                    result.setAttribute(
-                            "videoPath",
-                            finalVideoPath.toAbsolutePath().toString()
-                    );
+                    logger.info("Video saved: {}", destination);
 
                 } else {
 
                     Files.deleteIfExists(videoPath);
-
                     logger.info(
                             "Video deleted for passed test: {}",
-                            result.getName()
+                            testName
                     );
                 }
+
+            } catch (Exception e) {
+                logger.warn("Video handling failed", e);
+            }
+        });
+    }
+
+    // =========================================================
+    // WAIT FOR VIDEO FILE
+    // =========================================================
+
+    private boolean waitForVideoFile(Path videoPath) {
+
+        for (int i = 0; i < 25; i++) {
+
+            if (Files.exists(videoPath)
+                    && videoPath.toFile().length() > 0) {
+                return true;
             }
 
-        } catch (Exception e) {
-
-            logger.warn("Video handling failed", e);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return false;
+            }
         }
 
-        // =====================================================
-        // ALLURE VIDEO ATTACHMENT
-        // =====================================================
+        return false;
+    }
+
+    // =========================================================
+    // WAIT FOR VIDEO EXECUTOR
+    // =========================================================
+
+    public static void waitForVideoExecutor() {
+
+        if (videoExecutor == null || videoExecutor.isShutdown()) {
+            logger.info("Video executor already shut down");
+            return;
+        }
+
+        logger.info("Waiting for video tasks to complete...");
+
+        videoExecutor.shutdown();
 
         try {
 
-            if (!result.isSuccess()
-                    && finalVideoPath != null
-                    && Files.exists(finalVideoPath)) {
+            boolean completed =
+                    videoExecutor.awaitTermination(60, TimeUnit.SECONDS);
 
-                Allure.addAttachment(
-                        "🎥 Failure Video - " + testName,
-                        "video/webm",
-                        new ByteArrayInputStream(
-                                Files.readAllBytes(finalVideoPath)
-                        ),
-                        "webm"
-                );
-
-                logger.info(
-                        "Allure video attached for: {}",
-                        testName
-                );
+            if (completed) {
+                logger.info("All video tasks completed successfully");
+            } else {
+                logger.warn("Video executor timeout exceeded");
             }
 
-        } catch (Exception e) {
-
-            logger.warn(
-                    "Allure video attachment failed",
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error(
+                    "Interrupted while waiting for video executor",
                     e
             );
         }
-
-        // =====================================================
-        // BROWSER CLOSE
-        // =====================================================
-
-        try {
-
-            if (browser != null && browser.isConnected()) {
-
-                browser.close();
-            }
-
-        } catch (Exception e) {
-
-            logger.warn("Browser close failed", e);
-        }
-
-        // =====================================================
-        // PLAYWRIGHT CLOSE
-        // =====================================================
-
-        try {
-
-            if (playwright != null) {
-
-                playwright.close();
-            }
-
-        } catch (Exception e) {
-
-            logger.warn("Playwright close failed", e);
-        }
-
-        // =====================================================
-        // THREADLOCAL CLEANUP
-        // =====================================================
-
-        tlPage.remove();
-        tlContext.remove();
-        tlBrowser.remove();
-        tlPlaywright.remove();
     }
 }

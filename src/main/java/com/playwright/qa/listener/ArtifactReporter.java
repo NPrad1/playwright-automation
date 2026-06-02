@@ -2,6 +2,7 @@ package com.playwright.qa.listener;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.playwright.qa.base.BaseTest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,69 +32,142 @@ import java.util.List;
 
 public class ArtifactReporter implements IReporter {
 
-	private static final Logger logger = LogManager.getLogger(ArtifactReporter.class);
 
-	@Override
-	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
+    private static final Logger logger =
+        LogManager.getLogger(ArtifactReporter.class);
 
-		ExtentReports extent = ExtentManager.getInstance();
+    @Override
+    public void generateReport(
+            List<XmlSuite> xmlSuites,
+            List<ISuite> suites,
+            String outputDirectory) {
 
-		for (ISuite suite : suites) {
-			for (ISuiteResult suiteResult : suite.getResults().values()) {
-				ITestContext context = suiteResult.getTestContext();
+        // ✅ NEW: Wait for all background video tasks first
+        //
+        // WHY: generateReport() fires after all @AfterMethods
+        // but our video handling runs in a background thread pool
+        // in BaseTest. Without this call, video files may not
+        // exist yet when we check videoFile.exists() below.
+        //
+        // This single line guarantees all video move/delete
+        // operations are 100% complete before we build links.
+        BaseTest.waitForVideoExecutor(); // ✅ NEW LINE
 
-				// Process all failed tests
-				processResults(context.getFailedTests().getAllResults(), extent);
+        ExtentReports extent = ExtentManager.getInstance();
 
-				// Also process failed configurations (e.g., @BeforeMethod failures)
-				processResults(context.getFailedConfigurations().getAllResults(), extent);
-			}
-		}
+        for (ISuite suite : suites) {
+            for (ISuiteResult suiteResult :
+                    suite.getResults().values()) {
 
-		// ✅ Flush report after appending artifact links
-		extent.flush();
-		logger.info("ArtifactReporter: Extent report updated with trace & video links");
-	}
+                ITestContext context =
+                    suiteResult.getTestContext();
 
-	private void processResults(Collection<ITestResult> results, ExtentReports extent) {
+                // Process failed tests
+                processResults(
+                    context.getFailedTests().getAllResults(),
+                    extent
+                );
 
-		for (ITestResult result : results) {
+                // Process failed configurations
+                processResults(
+                    context.getFailedConfigurations()
+                        .getAllResults(),
+                    extent
+                );
+            }
+        }
 
-			String methodName = result.getMethod().getMethodName();
+        extent.flush();
 
-			ExtentTest artifactNode = extent.createTest("[Artifacts] " + methodName);
+        logger.info(
+            "ArtifactReporter: Extent report updated " +
+            "with trace & video links"
+        );
+    }
 
-			String testName = (String) result.getAttribute("testName");
+    private void processResults(
+            Collection<ITestResult> results,
+            ExtentReports extent) {
 
-			if (testName == null) {
-				continue;
-			}
+        for (ITestResult result : results) {
 
-// =========================
-// VIDEO
-// =========================
+            String methodName =
+                result.getMethod().getMethodName();
 
-			String videoPath = System.getProperty("user.dir") + "/test-output/videos/" + testName + ".webm";
+            ExtentTest artifactNode =
+                extent.createTest(
+                    "[Artifacts] " + methodName
+                );
 
-			java.io.File videoFile = new java.io.File(videoPath);
+            String testName =
+                (String) result.getAttribute("testName");
 
-			if (videoFile.exists()) {
+            // ✅ CHANGED: Added warning log
+            // BEFORE: silent continue
+            // AFTER:  logs which test had no testName
+            if (testName == null) {
+                logger.warn(
+                    "testName attribute not set for: {}",
+                    methodName
+                );
+                continue;
+            }
 
-				artifactNode.info("<a href='file:///" + videoPath.replace("\\", "/") + "'>🎥 Open Failure Video</a>");
-			}
+            // ─────────────────────────────────────────
+            // VIDEO — NO logic change
+            // Now guaranteed to find file because
+            // waitForVideoExecutor() was called above
+            // ─────────────────────────────────────────
+            String videoPath =
+                System.getProperty("user.dir")
+                    + "/test-output/videos/"
+                    + testName + ".webm";
 
-// =========================
-// TRACE
-// =========================
+            java.io.File videoFile =
+                new java.io.File(videoPath);
 
-			String tracePath = System.getProperty("user.dir") + "/test-output/traces/" + testName + "/trace.zip";
+            if (videoFile.exists()) {
+                artifactNode.info(
+                    "<a href='file:///"
+                        + videoPath.replace("\\", "/")
+                        + "'>🎥 Open Failure Video</a>"
+                );
+                logger.info(
+                    "Video link added for: {}", testName
+                );
+            } else {
+                // ✅ NEW: Log when video not found
+                logger.warn(
+                    "Video file not found for: {}", testName
+                );
+            }
 
-			java.io.File traceFile = new java.io.File(tracePath);
+            // ─────────────────────────────────────────
+            // TRACE — NO logic change
+            // ─────────────────────────────────────────
+            String tracePath =
+                System.getProperty("user.dir")
+                    + "/test-output/traces/"
+                    + testName + "/trace.zip";
 
-			if (traceFile.exists()) {
+            java.io.File traceFile =
+                new java.io.File(tracePath);
 
-				artifactNode.info("<a href='file:///" + tracePath.replace("\\", "/") + "'>📂 Open Trace</a>");
-			}
-		}
-	}
+            if (traceFile.exists()) {
+                artifactNode.info(
+                    "<a href='file:///"
+                        + tracePath.replace("\\", "/")
+                        + "'>📂 Open Trace</a>"
+                );
+                logger.info(
+                    "Trace link added for: {}", testName
+                );
+            } else {
+                // ✅ NEW: Log when trace not found
+                logger.warn(
+                    "Trace file not found for: {}", testName
+                );
+            }
+        }
+    }
 }

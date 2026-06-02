@@ -65,6 +65,7 @@ public class DashboardPage {
 	
 	public ManageCoursesPage manageCourses() {
 		manageButtonLocator.hover();
+		manageCoursesButtonLocator.waitFor();
 		manageCoursesButtonLocator.click();
 		return new ManageCoursesPage(page);
 	}
